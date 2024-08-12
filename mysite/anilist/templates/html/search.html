@@ -1,0 +1,35 @@
+{% extends 'base/base.html'%}
+
+{% block content %}
+
+<main class="relative flex w-full justify-center">
+    <div class="absolute flex top-16 overflow-x-auto">
+        <ul class="flex w-full  justify-center flex-wrap gap-10">
+        {% for searchs in search %}
+            <li class="flex-shrink-0 w-40 h-auto rounded-md bg-slate-900 flex flex-col items-center relative">
+                {% if searchs.media_type == 'movie' %}
+                <a href="{% url 'anilist:filme' searchs.id %}" aria-label="{{ searchs.name }}">
+                    <img src="{{ searchs.poster }}" alt="Poster de {{ searchs.name }}" class="rounded-md w-full h-60 object-cover">
+                </a>
+                <a href="{% url 'anilist:filme' searchs.id %}" class="mt-2 text-center">
+                    <p class="text-white font-bold text-ellipsis overflow-hidden w-full px-2">{{ searchs.name }}</p>
+                </a>
+                {%  endif %}
+
+                {% if searchs.media_type == 'tv' %}
+                <a href="{% url 'anilist:serie' searchs.id %}" aria-label="{{ searchs.name }}">
+                    <img src="{{ searchs.poster }}" alt="Poster de {{ searchs.name }}" class="rounded-md w-full h-60 object-cover">
+                </a>
+                <a href="{% url 'anilist:serie' searchs.id %}" class="mt-2 text-center">
+                    <p class="text-white font-bold text-ellipsis overflow-hidden w-full px-2">{{ searchs.name }}</p>
+                </a>
+                {%  endif %}
+            </li>        
+        {% endfor %}
+        </ul>
+    </div>
+</main>
+
+
+
+{% endblock %}

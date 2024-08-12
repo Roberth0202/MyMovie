@@ -1,0 +1,32 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+{% if serie %}
+<main class="relative justify-items-center items-center ">
+    <div class="absolute flex w-screen h-screen ">
+        <div class="absolute left-20 top-20">
+            <img src="{{serie.poster}}" class="flex w-72 h-96 rounded-xl" alt="">
+        </div>
+
+        <div class="absolute flex w-auto left-96 top-20">
+            <h1 class="text-3xl text-white font-bold">{{serie.name}}</h1>
+        </div>
+
+        <div class="absolute flex gap-3 top-32 left-96">
+            {% for genre in serie.genre %}
+            <div class="flex bg-gray-800 rounded-xl px-3">
+                <p class="text-white ">{{ genre }}</p>
+            </div>
+            {% endfor %}
+        </div >
+        <div class="absolute flex w-2/3 top-44 left-96">
+            <p class="text-white text-lg ">{{serie.description}}</p>
+        <div>
+
+        </div>
+    </div>
+</main>
+{% endif %}
+
+{% endblock %}

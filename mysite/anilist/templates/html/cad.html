@@ -1,0 +1,28 @@
+{% extends 'base/logcad.html' %}
+
+{% block content %}
+<div class="absolute flex w-44 h-12 top-5 justify-center">
+    <H1 class="absolute text-white text-2xl font-bold">Crie sua conta</H1>
+</div>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="relative flex text-red-700 top-28  {{ message.tags }}" {% endif %}>
+        {{ message }}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+<div class="absolute flex w-72 justify-center top-20 ">
+    <form action="{% url 'anilist:register' %}" method="POST" class="absolute flex-col space-y-7">
+    {% csrf_token %}
+        <input type="text" id="name" name="name" class="box-border w-72 p-2 bg-transparent focus:border-b-2 border-white outline-0 text-white" autofocus required autocomplete="off" placeholder="Nome"">
+        <input type="email" id="2email" name="2email" class="box-border w-72 p-2 bg-transparent focus:border-b-2 border-white focus:invalid:border-ted-700 outline-0 text-white" required autocomplete="off" placeholder="Confirmar Email"">
+        <input type="email" id="1email" name="1email" class="box-border w-72 p-2 bg-transparent focus:border-b-2 border-white focus:invalid:border-ted-700 outline-0 text-white" required autocomplete="off" placeholder="Email">
+        <input type="password" id="pass1" name="pass1" class="box-border w-72 p-2 bg-transparent focus:border-b-2 border-white outline-0 text-white" required autocomplete="off" placeholder="Senha">
+        <input type="password" id="pass2" name="pass2" class="box-border w-72 p-2 bg-transparent focus:border-b-2 border-white outline-0 text-white" required autocomplete="off" placeholder="Confirmar Senha">
+        <button type="submit" class="absolute left-24 w-24 h-12 rounded-lg font-medium top-80 bg-orange-600 text-white">Cadastrar</button>
+    </form>
+    
+</div>
+{% endblock %}
