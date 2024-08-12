@@ -1,15 +1,16 @@
 import json
-
+from decouple import config
 import requests
 
-api_key = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzMDI4MDc5OTIzYTU3Yzc5OGY3ODQ1ZmY4YWQwN2RmYiIsIm5iZiI6MTcyMjYzMjA4My4xNzQ3NzIsInN1YiI6IjY2YWFhYTI5YzBiZjhlMzBjOTE5NDkwMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.w_bujiN5vBTdOa5WSFBLC4J--0iHRfUijG-Q3CWsYPw"
+api_key = config("api_key")
+#url do geral
 base_url = 'https://api.themoviedb.org/3'
 # Tamanhos disponíveis: "w92", "w154", "w185", "w342", "w500", "w780", "original"
 poster_url = 'https://image.tmdb.org/t/p/'
 
 headers = {
     "accept": "application/json",
-    "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzMDI4MDc5OTIzYTU3Yzc5OGY3ODQ1ZmY4YWQwN2RmYiIsIm5iZiI6MTcyMjYzMjA4My4xNzQ3NzIsInN1YiI6IjY2YWFhYTI5YzBiZjhlMzBjOTE5NDkwMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.w_bujiN5vBTdOa5WSFBLC4J--0iHRfUijG-Q3CWsYPw"
+    "Authorization": f"Bearer {config('api_key')}"
 }
 
 #Filmes populares da semana
