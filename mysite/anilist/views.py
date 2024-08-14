@@ -1,11 +1,43 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .movie_functions import *
+from django.core.exceptions import ValidationError
+from .utils import adicionar_filme, remover_filme
+
+
+def add_to_list(request, movie_id):
+    try:
+        adicionar_filme(request.user, movie_id)
+        messages.success(request, 'Filme adicionado à sua lista!')
+    except ValidationError as e:
+        messages.error(request, f'Erro: {e}')
+    except Exception as e:
+        messages.error(request, f'Houve um erro ao adicionar o filme: {e}')
+
+@login_required
+def remove_from_list(request, movie_id):
+    try:
+        remover_filme(request.user, movie_id)
+        messages.success(request, 'Filme removido da sua lista!')
+    except Exception as e:
+        messages.error(request, f'Houve um erro ao remover o filme: {e}')
+        
 
 #Tela home
 def home(request):
+    if request.method == "POST":
+        # Verifica qual botão/formulário foi enviado
+        movie_id = request.POST.get('movie_id')  # O 'movie_id' deve vir do formulário/elemento HTML
+        action = request.POST.get('action')  # O 'action' pode ser 'add' ou 'remove' dependendo do formulário
+
+        if action == 'add':
+            add_to_list(request, movie_id)
+        elif action == 'remove':
+            remove_from_list(request, movie_id)
+
     popular_movie = filme_populares
     popular_serie = serie_populares
     search = search_movies
@@ -16,7 +48,6 @@ def home(request):
     }
     return render(request, 'html/home.html', context)
 
-
 def pesquisa(request):
     query = request.GET.get('q')
     searches = search_movies(query)
@@ -26,13 +57,33 @@ def pesquisa(request):
     return render(request, 'html/search.html', context)
 
 def detail_movie(request, movie_id):
+    if request.method == "POST":
+        # Verifica qual botão/formulário foi enviado
+        movie_id = request.POST.get('movie_id')  # O 'movie_id' deve vir do formulário/elemento HTML
+        action = request.POST.get('action')  # O 'action' pode ser 'add' ou 'remove' dependendo do formulário
+
+        if action == 'add':
+            add_to_list(request, movie_id)
+        elif action == 'remove':
+            remove_from_list(request, movie_id)
+            
     filme = info_movie(movie_id)
     context ={
         'filme' : filme,
     }
     return render(request, 'html/infomovie.html', context)
 
+@login_required
 def detail_serie(request, series_id):
+    if request.method == "POST":
+        # Verifica qual botão/formulário foi enviado
+        movie_id = request.POST.get('movie_id')  # O 'movie_id' deve vir do formulário/elemento HTML
+        action = request.POST.get('action')  # O 'action' pode ser 'add' ou 'remove' dependendo do formulário
+
+        if action == 'add':
+            add_to_list(request, movie_id)
+        elif action == 'remove':
+            remove_from_list(request, movie_id)
     serie = info_serie(series_id)
     context = {
         'serie' : serie,
@@ -77,4 +128,3 @@ def register(request):
 
 
     return render(request, 'html/cad.html')
-

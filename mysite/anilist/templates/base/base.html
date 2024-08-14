@@ -6,6 +6,7 @@
     <title>MyMovie</title>
     {% load static %}
     <link href="{% static 'css/output.css'%}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 
 <body class="bg-black overflow-x-hidden">
@@ -73,6 +74,9 @@
     </header>
     {% block content %}
     {% endblock %}
+<!--js do tailwind-->
 <script src="{% static 'js/script.js' %}"></script>
+<!-- Toastr JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </body>
 </html>

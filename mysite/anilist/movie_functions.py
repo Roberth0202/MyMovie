@@ -96,6 +96,7 @@ def info_movie(movie_id):
             'name': dados['title'],
             'poster': poster_url + 'w500' + dados['poster_path'],
             'year': dados['release_date'],
+            'id': dados['id'],
             'genre': generos,
             'description' : dados['overview']
         }

@@ -5,14 +5,18 @@
 {% if serie %}
 <main class="relative justify-items-center items-center ">
     <div class="absolute flex w-screen h-screen ">
+
+        <!---POSTER-->
         <div class="absolute left-20 top-20">
             <img src="{{serie.poster}}" class="flex w-72 h-96 rounded-xl" alt="">
         </div>
 
+        <!---NOME DO FILME-->
         <div class="absolute flex w-auto left-96 top-20">
             <h1 class="text-3xl text-white font-bold">{{serie.name}}</h1>
         </div>
 
+        <!--GENERO DO FILME-->
         <div class="absolute flex gap-3 top-32 left-96">
             {% for genre in serie.genre %}
             <div class="flex bg-gray-800 rounded-xl px-3">
@@ -20,6 +24,8 @@
             </div>
             {% endfor %}
         </div >
+
+        <!--DESCRIÇÃO DO FILME-->
         <div class="absolute flex w-2/3 top-44 left-96">
             <p class="text-white text-lg ">{{serie.description}}</p>
         <div>
@@ -27,6 +33,15 @@
         </div>
     </div>
 </main>
+
+<!--Adicionar e remover da lista-->               
+<form class="absolute z-auto left-96 top-80 flex justify-between space-x-2"  method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="movie_id" value="{{series.id}}">
+    <button class="z-10 text-white font-bold" type="submit" name="action" value="add">add</button>
+    <button class="z-10 text-white font-bold" type="submit" name="action" value="remove">remove</button>
+</form> 
+
 {% endif %}
 
 {% endblock %}
