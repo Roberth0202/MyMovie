@@ -85,8 +85,6 @@ def info_movie(movie_id):
     
     resposta = requests.get(url, headers=headers, params=parametros)
     
-    
-    
     if resposta.status_code == 200:
         dados = resposta.json()
         #pega os generos do filme
@@ -111,9 +109,7 @@ def info_serie(series_id):
     }
     
     resposta = requests.get(url, headers=headers, params=parametros)
-    
-    
-    
+
     if resposta.status_code == 200:
         dados = resposta.json()
         
@@ -123,6 +119,7 @@ def info_serie(series_id):
             'name' : dados['name'],
             'poster' : poster_url + 'w500' + dados['poster_path'],
             'year' : dados['first_air_date'],
+            'id': dados['id'],
             'genre' : generos,
             'description' : dados['overview'],
         }

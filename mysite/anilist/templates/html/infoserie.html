@@ -32,15 +32,26 @@
 
         </div>
     </div>
-</main>
 
-<!--Adicionar e remover da lista-->               
-<form class="absolute z-auto left-96 top-80 flex justify-between space-x-2"  method="POST">
-    {% csrf_token %}
-    <input type="hidden" name="movie_id" value="{{series.id}}">
-    <button class="z-10 text-white font-bold" type="submit" name="action" value="add">add</button>
-    <button class="z-10 text-white font-bold" type="submit" name="action" value="remove">remove</button>
-</form> 
+    <!--Ser tiver logado adiciona ou remove-->
+    {% if user.is_authenticated %}
+        <!--Adicionar e remover da lista-->
+        <form class="absolute z-auto left-96 top-80 flex justify-between space-x-4"  method="POST">
+            {% csrf_token %}
+                <input type="hidden" name="media_id" value="{{serie.id}}">
+                <input type="hidden" name="midia_type" value="tv">
+                <button class="z-10 text-white font-bold" type="submit" name="action" value="add">add</button>
+                <button class="z-10 text-white font-bold" type="submit" name="action" value="remove">remove</button>
+        </form>
+    <!--Se não. vai pra pagina de login-->
+    {% else %}
+    <div class="absolute z-auto left-96 top-80 flex justify-between gap-4">
+        <a href="{% url 'anilist:login' %}"><button class="z-10 text-white font-bold" type="submit" name="" value="add">add</button></a>
+        <a href="{% url 'anilist:login' %}"><button class="z-10 text-white font-bold" type="submit" name="" value="remove">remove</button></a>
+    </div>
+    {% endif %}
+
+</main>
 
 {% endif %}
 

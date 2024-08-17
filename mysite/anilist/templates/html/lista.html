@@ -1,5 +1,13 @@
-{% expands 'base.html' %}
+{% extends 'base/base.html' %}
 
 {% block content %}
+<main>
+    <h1>Lista de Filmes/Séries</h1>
+    <ul>
+        {% for itens in filme, serie %}
+            <li class='text-white'>{{itens.name}}</li>
+        {% endfor %}
+    </ul>
+</main>
 
 {% endblock %}

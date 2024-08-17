@@ -5,39 +5,32 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .movie_functions import *
 from django.core.exceptions import ValidationError
-from .utils import adicionar_filme, remover_filme
+from .utils import adicionar_midia, remover_midia
+from .models import Lista
 
 
-def add_to_list(request, movie_id):
+#Adiciona filme/serie na lista
+@login_required(login_url = '/page/login/')
+def add_to_list(request, media_id, midia_type):
     try:
-        adicionar_filme(request.user, movie_id)
-        messages.success(request, 'Filme adicionado à sua lista!')
+        adicionar_midia(request.user, media_id, midia_type)
+        messages.success(request, 'Filme/Série adicionado(a) à sua lista!')
     except ValidationError as e:
         messages.error(request, f'Erro: {e}')
     except Exception as e:
-        messages.error(request, f'Houve um erro ao adicionar o filme: {e}')
+        messages.error(request, f'Houve um erro ao adicionar o filme/série: {e}')
 
-@login_required
-def remove_from_list(request, movie_id):
+#remove o filme da lista
+@login_required(login_url ='/page/login/')                
+def remove_from_list(request, media_id, midia_type):
     try:
-        remover_filme(request.user, movie_id)
-        messages.success(request, 'Filme removido da sua lista!')
+        remover_midia(request.user, media_id, midia_type)
+        messages.success(request, 'Filme/Série removido(a) da sua lista!')
     except Exception as e:
-        messages.error(request, f'Houve um erro ao remover o filme: {e}')
+        messages.error(request, f'Houve um erro ao remover o filme/série: {e}')
         
-
 #Tela home
 def home(request):
-    if request.method == "POST":
-        # Verifica qual botão/formulário foi enviado
-        movie_id = request.POST.get('movie_id')  # O 'movie_id' deve vir do formulário/elemento HTML
-        action = request.POST.get('action')  # O 'action' pode ser 'add' ou 'remove' dependendo do formulário
-
-        if action == 'add':
-            add_to_list(request, movie_id)
-        elif action == 'remove':
-            remove_from_list(request, movie_id)
-
     popular_movie = filme_populares
     popular_serie = serie_populares
     search = search_movies
@@ -48,6 +41,7 @@ def home(request):
     }
     return render(request, 'html/home.html', context)
 
+#Pesquisa
 def pesquisa(request):
     query = request.GET.get('q')
     searches = search_movies(query)
@@ -56,39 +50,54 @@ def pesquisa(request):
     }
     return render(request, 'html/search.html', context)
 
+# Detalhes do filme
 def detail_movie(request, movie_id):
     if request.method == "POST":
-        # Verifica qual botão/formulário foi enviado
-        movie_id = request.POST.get('movie_id')  # O 'movie_id' deve vir do formulário/elemento HTML
-        action = request.POST.get('action')  # O 'action' pode ser 'add' ou 'remove' dependendo do formulário
-
+        media_id = request.POST.get('media_id')
+        midia_type = request.POST.get('midia_type')
+        action = request.POST.get('action')
+        
         if action == 'add':
-            add_to_list(request, movie_id)
+            add_to_list(request, media_id, midia_type)
         elif action == 'remove':
-            remove_from_list(request, movie_id)
-            
+            remove_from_list(request, media_id, midia_type)
+
     filme = info_movie(movie_id)
-    context ={
-        'filme' : filme,
+    context = {
+        'filme': filme,
     }
     return render(request, 'html/infomovie.html', context)
 
-@login_required
+# Detalhes da série
 def detail_serie(request, series_id):
     if request.method == "POST":
-        # Verifica qual botão/formulário foi enviado
-        movie_id = request.POST.get('movie_id')  # O 'movie_id' deve vir do formulário/elemento HTML
-        action = request.POST.get('action')  # O 'action' pode ser 'add' ou 'remove' dependendo do formulário
-
+        media_id = request.POST.get('media_id')
+        midia_type = request.POST.get('midia_type')
+        action = request.POST.get('action')
+        
         if action == 'add':
-            add_to_list(request, movie_id)
+            add_to_list(request, media_id, midia_type)
         elif action == 'remove':
-            remove_from_list(request, movie_id)
+            remove_from_list(request, media_id, midia_type)
+
     serie = info_serie(series_id)
     context = {
-        'serie' : serie,
+        'serie': serie,
     }
     return render(request, 'html/infoserie.html', context)
+
+#Lista de filmes/series do usuario
+@login_required(login_url='/page/login/')
+def lista(request):
+    object_id = Lista.objects.filter(user_id=request.user)
+    filme = info_movie(object_id)
+    serie = info_serie(object_id)
+    context = {
+        'object_id' : object_id,
+        'filme' : filme,
+        'serie' : serie,
+    }
+    return render(request, "html/lista.html", context)
 
 #tela de login
 def login(request):

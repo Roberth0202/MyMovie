@@ -20,13 +20,13 @@
                     <div class="relative flex left-6 items-center">
                         <ul class="flex gap-3 font-bold list-none">
                             <li class="flex text-white justify-center items-center hover:bg-gray-800 w-20 h-10 rounded-lg text-lg"><a href="{% url 'anilist:home' %}" class="">Home</a></li>
-                            <li class="flex text-white justify-center items-center hover:bg-gray-800 w-20 h-10 rounded-lg text-lg"><a href="#">Lista</a></li>
+                            <li class="flex text-white justify-center items-center hover:bg-gray-800 w-20 h-10 rounded-lg text-lg"><a href="{% url 'anilist:lista' %}">Lista</a></li>
                             <li class="flex text-white justify-center items-center hover:bg-gray-800 w-20 h-10 rounded-lg text-lg"><a href="#">Genero</a></li>
                         </ul>
                     </div>
                 </div>
                 
-                <div class="absolute flex  right-0 w-50 justify-end items-center">
+                <div class="absolute flex right-0 w-50 justify-end items-center">
                     <div class="flex gap-4 mr-6 rounded-lg">
                         <form action="{% url 'anilist:pesquisa'%}" class="flex justify-end w-5" method="GET">
                             <input class="font-bold text-md text-white bg-transparent outline-none border-b-2 border-white" type="search" name="q" autocomplete="off" placeholder="Pesquisar">

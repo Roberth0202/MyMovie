@@ -10,4 +10,5 @@ urlpatterns = [
     path('filme/<movie_id>', views.detail_movie, name="filme"),
     path('serie/<series_id>', views.detail_serie, name="serie"),
     path('pesquisa/', views.pesquisa, name="pesquisa"),
+    path('lista/', views.lista, name="lista"),
     ]
