@@ -96,7 +96,8 @@ def info_movie(movie_id):
             'year': dados['release_date'],
             'id': dados['id'],
             'genre': generos,
-            'description' : dados['overview']
+            'description' : dados['overview'],
+            'type' : 'movie',
         }
         return movie_details
     
@@ -122,6 +123,7 @@ def info_serie(series_id):
             'id': dados['id'],
             'genre' : generos,
             'description' : dados['overview'],
+            'type' : 'tv',
         }
         return serie_detail
         

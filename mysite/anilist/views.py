@@ -89,13 +89,22 @@ def detail_serie(request, series_id):
 #Lista de filmes/series do usuario
 @login_required(login_url='/page/login/')
 def lista(request):
-    object_id = Lista.objects.filter(user_id=request.user)
-    filme = info_movie(object_id)
-    serie = info_serie(object_id)
+    object_list = Lista.objects.filter(user_id=request.user)
+    
+    # Inicializa variáveis para evitar erros se as condições não forem atendidas
+    midias = []
+
+     # Iterar sobre os objetos encontrados e processar conforme o tipo de mídia
+    for obj in object_list:
+        if obj.midia_type == 'movie':
+            filme = info_movie(obj.media_id)  # Chamar a função para obter os detalhes do filme
+            midias.append(filme)
+        elif obj.midia_type == 'tv':
+            serie = info_serie(obj.media_id)  # Chamar a função para obter os detalhes da série
+            midias.append(serie)
+    
     context = {
-        'object_id' : object_id,
-        'filme' : filme,
-        'serie' : serie,
+        'midias' : midias,
     }
     return render(request, "html/lista.html", context)
 
