@@ -168,6 +168,5 @@ def search_movies(query):
         return resultados
 
 
-
 #Devolve o filme/serie e suas informções por meio o id(alguns filme estão bugados) 
 
