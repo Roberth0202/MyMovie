@@ -11,4 +11,6 @@ urlpatterns = [
     path('serie/<series_id>', views.detail_serie, name="serie"),
     path('pesquisa/', views.pesquisa, name="pesquisa"),
     path('lista/', views.lista, name="lista"),
+    path('filmes/', views.filmes, name="filmes"),
+    path('series/', views.series, name="series"),
     ]

@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -108,6 +109,37 @@ def lista(request):
     }
     return render(request, "html/lista.html", context)
 
+def filmes(request):
+    page = request.GET.get("page", 1)
+    
+    try:
+        page = int(page)  # Converte para inteiro
+    except ValueError:
+        page = 1  # Se falhar, define 1
+    
+    all_movies = Filmes(page)  # Call Filmes function
+    
+    # Cria um objeto de paginação simulado
+    paginator = {
+        'has_previous' : all_movies['page'] > 1,
+        'previous_page_number' : all_movies['page'] - 1 if all_movies['page'] > 1 else None,
+        'has_next' : all_movies['page'] < all_movies['total_pages'],
+        'next_page_number' : all_movies['page'] + 1 if all_movies['page'] < all_movies['total_pages'] else None,
+        'number' : all_movies['page'],
+        'paginator' : {
+            'num_pages': all_movies['total_pages']
+        }
+    }
+    
+    context = {
+        'all_movies': all_movies['results'], #lista de filmes
+        'page_obj' : paginator #objeto de paginação
+    }
+    return render(request, 'html/filmes.html', context)
+
+def series(request):
+    return render(request, 'html/series.html')
+    
 #tela de login
 def login(request):
     if request.method == "POST":

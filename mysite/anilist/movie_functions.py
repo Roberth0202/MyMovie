@@ -90,9 +90,14 @@ def info_movie(movie_id):
         #pega os generos do filme
         generos = [genero['name'] for genero in dados['genres']]
         
+        if dados.get('poster_path'):
+            poster_url_completo = poster_url + 'w500' + dados['poster_path']
+        else:
+            poster_url_completo = None
+        
         movie_details={
             'name': dados['title'],
-            'poster': poster_url + 'w500' + dados['poster_path'],
+            'poster': poster_url_completo,
             'year': dados['release_date'],
             'id': dados['id'],
             'genre': generos,
@@ -167,6 +172,44 @@ def search_movies(query):
         
         return resultados
 
+#mostra uma lista de filme
+def Filmes(page):
+    url = f'{base_url}/discover/movie'
+    
+    max_pages = 500  # Limite manual de páginas
+    page = min(page, max_pages)  # Garante que a página não ultrapasse o limite
+    
+    parametros = {
+        'api_key': api_key,
+        'language': 'pt-BR',
+        'page': page,
+    }
+    
+    resposta = requests.get(url, headers=headers, params=parametros)
+        
+    if resposta.status_code != 200:
+        # Handle error (e.g., log error, return empty list)
+        return {'results': [], 'page': 1, 'total_pages': 1}
 
-#Devolve o filme/serie e suas informções por meio o id(alguns filme estão bugados) 
+    dados = resposta.json()
+    
+    total_pages = min(dados['total_pages'], max_pages)  # Limita o total de páginas
+    
+    lista_filmes = []
+    for movie in dados['results']:
+        id = movie['id']    
+        name = movie['title']
+        poster = movie['poster_path']
+        
+        
+        lista_filmes.append({
+            'id' : id,
+            'name' : name,
+            'poster' : poster_url + 'w342' + poster,
+        })
 
+    return {
+        'results': lista_filmes,
+        'page': dados['page'],  # Página atual
+        'total_pages': total_pages  # Total de páginas, limitado a 500
+    }
