@@ -2,41 +2,44 @@
 
 {% block content %}
 
-<main class="absolute min-h-full w-screen ">
-    <div class="flex top-24 m-10">
-        <ul class="flex flex-wrap w-full gap-10 justify-center ">
-            {% for filmes in all_movies %}
-                <li class="flex-shrink-0 w-48  h-auto rounded-md flex flex-col items-center relative">
-                    <a href="{% url 'anilist:filme' filmes.id %}"><img class="rounded-md w-full h-60 object-cover" src="{{ filmes.poster }}" alt=""></a>
-                    <a href="{% url 'anilist:filme' filmes.id %}"><p class=" text-white font-bold">{{ filmes.name }}</p></a>
+<main class="absolute min-h-full w-screen">
+    <div class=" flex top-24 m-10">
+        <ul class="flex flex-wrap w-full gap-10 justify-center " >
+            {% for series in all_series %}
+                <li class="flex-shrink-0 w-48 h-auto rounded-md flex flex-col items-center relative">
+                    <a href="{% url 'anilist:serie' series.id %}"><img class="rounded-md w-full h-60 object-cover" src="{{ series.poster }}" alt=""></a>
+                    <a href="{% url 'anilist:serie' series.id %}"><p class=" text-white text-lg font-bold " >{{ series.name }}</p></a>
                 </li>
             {% endfor %}
         </ul>
     </div>
+
+
     
-    <div class="pagination flex justify-center h-10">
+    <div class="pagination flex justify-center h-10 ">
         <span class="step-links flex items-center text-white top-3">
             {% if page_obj.has_previous %}
                 <a href="?page=1" >&laquo; first</a>
                 <a href="?page={{ page_obj.previous_page_number }}">previous</a>
             {% endif %}
-    
+
             <ul class="flex items-center">
                 {% for num in page_obj.page_range %}
                     {% if num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
                         {% if num == page_obj.number %}
                             <li class="flex items-center justify-center"><span class="bg-blue-500 w-8 h-8 text-white rounded-full flex items-center justify-center">{{ num }}</span></li>
                         {% else %}
-                            <li><a href="?page={{ num }}" class="px-3 py-1">{{ num }}</a></li>
-                        {% endif %}      
+                            <li><a href="?page={{ num }}" class=" px-3 py-1 ">{{ num }}</a></li>
+                        {% endif %}
                     {% endif %}
                 {% endfor %}
             </ul>
-
+            
             {% if page_obj.has_next %}
                 <a href="?page={{ page_obj.next_page_number }}">next</a>
                 <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
             {% endif %}
+
         </span>
     </div>
 </main>

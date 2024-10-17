@@ -126,6 +126,7 @@ def filmes(request):
         'has_next' : all_movies['page'] < all_movies['total_pages'],
         'next_page_number' : all_movies['page'] + 1 if all_movies['page'] < all_movies['total_pages'] else None,
         'number' : all_movies['page'],
+        'page_range' : range(1 , all_movies['total_pages'] + 1),
         'paginator' : {
             'num_pages': all_movies['total_pages']
         }
@@ -138,7 +139,33 @@ def filmes(request):
     return render(request, 'html/filmes.html', context)
 
 def series(request):
-    return render(request, 'html/series.html')
+    page = request.GET.get("page", 1)
+    
+    try:
+        page = int(page)  # Converte para inteiro
+    except ValueError:
+        page = 1  # Se falhar, define 1
+        
+    all_series = Series(page)
+    
+    # Cria um objeto de paginação simulado
+    paginator = {
+        'has_previous' : all_series['page'] > 1,
+        'previous_page_number' : all_series['page'] - 1 if all_series['page'] > 1 else None,
+        'has_next' : all_series['page'] < all_series['total_pages'],
+        'next_page_number' : all_series['page'] + 1 if all_series['page'] < all_series['total_pages'] else None,
+        'number' : all_series['page'],
+        'page_range' : range(1 , all_series['total_pages'] + 1),
+        'paginator' : {
+            'num_pages': all_series['total_pages']
+        }
+    }
+    
+    context = {
+        'all_series' : all_series['results'],
+        'page_obj' : paginator
+    }
+    return render(request, 'html/series.html', context)
     
 #tela de login
 def login(request):

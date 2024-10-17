@@ -213,3 +213,49 @@ def Filmes(page):
         'page': dados['page'],  # Página atual
         'total_pages': total_pages  # Total de páginas, limitado a 500
     }
+    
+def Series(page):
+    url = f'{base_url}/discover/tv'
+    
+    max_pages = 500  # Limite manual de páginas
+    page = min(page, max_pages)  # Garante que a página não ultrapasse o limite
+    
+    parametros = {
+        'api_key': api_key,
+        'language': 'pt-BR',
+        'page': page,
+    }
+    
+    resposta = requests.get(url, headers=headers, params=parametros)
+    
+    if resposta.status_code != 200:
+        # Handle error (e.g., log error, return empty list)
+        return {'results': [], 'page': 1, 'total_pages': 1}
+    
+    dados = resposta.json()
+    
+    total_pages = min(dados['total_pages'], max_pages)  # Limita o total de páginas
+    
+    lista_series = []
+     
+    for serie in dados['results']:
+
+        if serie['poster_path'] == None:
+            continue # Pula essa série se não houver poster
+        
+        poster = serie['poster_path']
+        id = serie['id']
+        name = serie['name']
+        
+        lista_series.append({
+            'id' : id,
+            'name' : name,
+            'poster' : poster_url + 'w342' + poster,
+        })
+    
+    return {
+        'results' : lista_series,
+        'page' : dados['page'],
+        'total_pages' : total_pages,
+    }
+    

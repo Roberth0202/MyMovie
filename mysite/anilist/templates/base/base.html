@@ -7,6 +7,7 @@
     {% load static %}
     <link href="{% static 'css/output.css'%}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link href="/website/css/uicons-solid-rounded.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
@@ -23,6 +24,7 @@
                             <li class="flex text-white justify-center items-center hover:bg-gray-800 w-20 h-10 rounded-lg text-lg"><a href="{% url 'anilist:home' %}" class="">Home</a></li>
                             <li class="flex text-white justify-center items-center hover:bg-gray-800 w-20 h-10 rounded-lg text-lg"><a href="{% url 'anilist:lista' %}">Lista</a></li>
                             <li class="flex text-white justify-center items-center hover:bg-gray-800 w-20 h-10 rounded-lg text-lg"><a href="{% url 'anilist:filmes' %}">Filmes</a></li>
+                            <li class="flex text-white justify-center items-center hover:bg-gray-800 w-20 h-10 rounded-lg text-lg"><a href="{% url 'anilist:series' %}">Séries</a></li>
                         </ul>
                     </div>
                 </div>
