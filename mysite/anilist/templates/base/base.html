@@ -11,70 +11,51 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
-<body class="bg-black overflow-x-hidden h-full">
-    <header class="relative h-16 w-screen">
-        <div class="flex items-center">
-            <nav class="relative flex items-center w-full justify-evenly h-16">
-                <div class="absolute flex items-center mx-auto sm:w-screen px-4 sm:px-6  lg:px-8">
-                    <div class=" ">
-                        <a href="{% url 'anilist:home' %}" class="text-red-700 font-bold text-3xl">MyMovie</a>
-                    </div>
-                    <div class="relative flex left-6 items-center">
-                        <ul class="flex gap-3 font-bold list-none">
-                            <li class="flex text-white justify-center items-center hover:bg-gray-800 w-20 h-10 rounded-lg text-lg"><a href="{% url 'anilist:home' %}" class="">Home</a></li>
-                            <li class="flex text-white justify-center items-center hover:bg-gray-800 w-20 h-10 rounded-lg text-lg"><a href="{% url 'anilist:lista' %}">Lista</a></li>
-                            <li class="flex text-white justify-center items-center hover:bg-gray-800 w-20 h-10 rounded-lg text-lg"><a href="{% url 'anilist:filmes' %}">Filmes</a></li>
-                            <li class="flex text-white justify-center items-center hover:bg-gray-800 w-20 h-10 rounded-lg text-lg"><a href="{% url 'anilist:series' %}">Séries</a></li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="absolute flex right-0 w-50 justify-end items-center">
-                    <div class="flex gap-4 mr-6 rounded-lg">
-                        <form action="{% url 'anilist:pesquisa'%}" class="flex justify-end w-5" method="GET">
-                            <input class="font-bold text-md text-white bg-transparent outline-none border-b-2 border-white" type="search" name="q" autocomplete="off" placeholder="Pesquisar">
-                            <ul></ul>
+<body class=" overflow-x-hidden h-full">
+    <header class="h-16 w-screen">
+        <nav class="flex items-center justify-between h-full px-4 sm:px-6 lg:px-8">
+            <!-- Título à esquerda -->
+            <div class="titulo text-white text-4xl">
+                <a href="{% url 'anilist:home' %}">MyMovie</a>
+            </div>
 
-                            <script>
-                                document.addEventListener('DOMContentLoaded', function() {
-                                    let input = document.querySelector('input[name="q"]');
-                                    let results = document.getElementById('search-results');
-                                    
-                                    input.addEventListener('input', async function() {
-                                        if (input.value.length > 0) {
-                                            let response = await fetch('/search?q=' + input.value);
-                                            let shows = await response.json();
-                                            results.innerHTML = '';
-                                            shows.forEach(show => {
-                                                let li = document.createElement('li');
-                                                li.textContent = show.name;
-                                                results.appendChild(li);
-                                            });
-                                        } else {
-                                            results.innerHTML = '';
-                                        }
-                                    });
-                                });
-                            </script>
-                        </form>
+            <!-- Rotas no centro -->
+            <div class="flex-1 flex justify-center">
+                <ul class="flex gap-6 list-none">
+                    <li class="flex text-white justify-center items-center  w-20 h-10 rounded-lg text-lg">
+                        <a href="{% url 'anilist:home' %}" class="rotas">Home</a>
+                    </li>
+                    <li class="flex text-white justify-center items-center  w-20 h-10 rounded-lg text-lg">
+                        <a href="{% url 'anilist:lista' %}" class="rotas">Lista</a>
+                    </li>
+                    <li class="flex text-white justify-center items-center  w-20 h-10 rounded-lg text-lg">
+                        <a href="{% url 'anilist:filmes' %}" class="rotas">Filmes</a>
+                    </li>
+                    <li class="flex text-white justify-center items-center  w-20 h-10 rounded-lg text-lg">
+                        <a href="{% url 'anilist:series' %}" class="rotas">Séries</a>
+                    </li>
+                </ul>
+            </div>
 
-                        {% if user.is_authenticated %}
-                            <p class="font-bold text-lg text-white">{{ user.username }}</p>
-                            <form action="{% url 'anilist:logout' %}" method="POST">
-                                {% csrf_token %}
-                                <button type="submit" class="font-bold text-lg text-white">Sair</button>
-                            </form>
-                        {% else %}
+            <!-- Pesquisa e login à direita -->
+            <div class="flex items-center gap-4">
+                <form action="{% url 'anilist:pesquisa'%}" method="GET" class="flex items-center">
+                    <input class="font-bold text-md text-white bg-transparent outline-none border-b-2 border-white" type="search" name="q" autocomplete="off" placeholder="Pesquisar">
+                </form>
 
-                        <ul class="flex gap-4 text-white rounded-lg font-bold text-lg list-none">
-                            <li><a href="{% url 'anilist:login' %}" class="z-50">fazer Login</a></li>
-                        </ul>
-                        {% endif %}
-                    </div>
-                </div>
-            </nav>
-        </div>
+                {% if user.is_authenticated %}
+                    <p class="font-bold text-lg text-white">{{ user.username }}</p>
+                    <form action="{% url 'anilist:logout' %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="font-bold text-lg text-white">Sair</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'anilist:login' %}" class="log font-bold text-lg text-white">Login</a>
+                {% endif %}
+            </div>
+        </nav>
     </header>
+
     {% block content %}
     {% endblock %}
 <!--js do tailwind-->

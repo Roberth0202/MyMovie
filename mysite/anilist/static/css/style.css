@@ -1,3 +1,19 @@
+body{
+    background-color: rgb(19, 19, 19);
+}
+.titulo{
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    text-decoration: beige;
+}
+.rotas{
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    text-decoration: beige;
+}
+
+.log{
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    text-decoration: beige;
+}
 
 .step-links {
     font-weight:800;

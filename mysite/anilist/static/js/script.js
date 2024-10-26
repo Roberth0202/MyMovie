@@ -30,3 +30,24 @@ function rolarDireita2() {
 btnEsquerda2.addEventListener('click', rolarEsquerda2);
 btnDireita2.addEventListener('click', rolarDireita2);
 
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    let input = document.querySelector('input[name="q"]');
+    let results = document.getElementById('search-results');
+    
+    input.addEventListener('input', async function() {
+        if (input.value.length > 0) {
+            let response = await fetch('/search?q=' + input.value);
+            let shows = await response.json();
+            results.innerHTML = '';
+            shows.forEach(show => {
+                let li = document.createElement('li');
+                li.textContent = show.name;
+                results.appendChild(li);
+            });
+        } else {
+            results.innerHTML = '';
+        }
+    });
+});
