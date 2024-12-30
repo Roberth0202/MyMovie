@@ -1,7 +1,7 @@
 import json
 from decouple import config
 import requests
-
+import logging
 api_key = config("api_key")
 #url do geral
 base_url = 'https://api.themoviedb.org/3'
@@ -13,36 +13,43 @@ headers = {
     "Authorization": f"Bearer {config('api_key')}"
 }
 
-#Filmes populares da semana
+# Configuração básica do logging
+logging.basicConfig(level=logging.INFO)
+
+# Filmes populares da semana
 def filme_populares():
+    """
+    Retorna uma lista de filmes populares da semana.
+
+    Returns:
+        list: Lista de dicionários contendo informações dos filmes populares.
+    """
     url = f"{base_url}/trending/movie/week?language=pt-BR"
     parametros = {
         'api_key': api_key,
         'language': 'pt-BR'
     }
     
-    resposta = requests.get(url, headers=headers, params=parametros)
-    
-    max_results = 20
-    count = 0
-    filmes = [] 
+    try:
+        resposta = requests.get(url, headers=headers, params=parametros)
+        resposta.raise_for_status()  # Levanta uma exceção para códigos de status HTTP 4xx/5xx
+    except requests.exceptions.RequestException as e:
+        logging.error(f"Erro na requisição: {e}")
+        return []
+
+    filmes = []
     if resposta.status_code == 200:
         dados = resposta.json()
-
         if 'results' in dados:
-            for movie in dados['results']:
-                name = movie['title']
-                poster = movie['poster_path']
-                id = movie['id']
-                
-                if count < max_results:
-                    filmes.append({
-                        'name': name,
-                        'poster': poster_url + 'w342' + poster,
-                        'id': id,
-                    })
-                    count += 1
-        return filmes
+            filmes = [
+                {
+                    'name': movie['title'],
+                    'poster': poster_url + 'w342' + movie['poster_path'],
+                    'id': movie['id']
+                }
+                for movie in dados['results'][:20]  # Limita a 20 resultados
+            ]
+    return filmes
 
 #Series populares na semana
 def serie_populares():
