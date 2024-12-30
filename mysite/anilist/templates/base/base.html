@@ -5,15 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MyMovie</title>
     {% load static %}
-    <link href="{% static 'css/output.css'%}" rel="stylesheet">
+    <!-- Estilos externos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link href="/website/css/uicons-solid-rounded.css" rel="stylesheet">
+    <!-- Estilos internos -->
+    <link href="{% static 'css/output.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
-<body class=" overflow-x-hidden h-full">
-    <header class="h-16 w-screen">
-        <nav class="flex items-center justify-between h-full px-4 sm:px-6 lg:px-8">
+<body class="overflow-x-hidden h-full">
+    <header class="h-16 max-w-100%">
+        <nav class="flex items-center justify-between h-full px-4 sm:px-6 lg:px-8" role="navigation" aria-label="Main Navigation">
             <!-- Título à esquerda -->
             <div class="titulo text-white text-4xl">
                 <a href="{% url 'anilist:home' %}">MyMovie</a>
@@ -22,14 +24,14 @@
             <!-- Rotas no centro -->
             <div class="flex-1 flex justify-center">
                 <ul class="flex gap-6 list-none">
-                    <li class="flex text-white justify-center items-center  w-20 h-10 rounded-lg text-lg">
-                        <a href="{% url 'anilist:home' %}" class="rotas">Home</a>
+                    <li class="flex justify-center items-center ba w-20 h-10 rounded-lg text-lg">
+                        <a href="{% url 'anilist:home' %}" class="rotas text-white">Home</a>
                     </li>
-                    <li class="flex text-white justify-center items-center  w-20 h-10 rounded-lg text-lg">
-                        <a href="{% url 'anilist:lista' %}" class="rotas">Lista</a>
+                    <li class="flex justify-center items-center w-20 h-10 rounded-lg text-lg">
+                        <a href="{% url 'anilist:lista' %}" class="rotas text-white">Lista</a>
                     </li>
-                    <li class="flex text-white justify-center items-center  w-20 h-10 rounded-lg text-lg">
-                        <a href="{% url 'anilist:filmes' %}" class="rotas">Filmes</a>
+                    <li class="flex justify-center items-center w-20 h-10 rounded-lg text-lg">
+                        <a href="{% url 'anilist:filmes' %}" class="rotas text-white">Filmes</a>
                     </li>
                     <li class="flex text-white justify-center items-center  w-20 h-10 rounded-lg text-lg">
                         <a href="{% url 'anilist:series' %}" class="rotas">Séries</a>
@@ -55,9 +57,8 @@
             </div>
         </nav>
     </header>
-
-    {% block content %}
-    {% endblock %}
+{% block content %}
+{% endblock %}
 <!--js do tailwind-->
 <script src="{% static 'js/script.js' %}"></script>
 <!-- Toastr JS -->

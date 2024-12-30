@@ -18,7 +18,7 @@
         <span class="step-links flex items-center text-white top-3">
             {% if page_obj.has_previous %}
                 <a href="?page=1" >&laquo; first</a>
-                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                <a href="?page={{ page_obj.previous_page_number }}">inicio</a>
             {% endif %}
     
             <ul class="flex items-center">
@@ -34,8 +34,9 @@
             </ul>
 
             {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">next</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                <a href="?page={{ page_obj.next_page_number }}">proximo</a>
+                <p>...</p>
+                <a href="?page={{ page_obj.paginator.num_pages }}"> ultimo &raquo;</a>
             {% endif %}
         </span>
     </div>

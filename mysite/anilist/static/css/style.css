@@ -1,6 +1,8 @@
 body{
     background-color: rgb(19, 19, 19);
+    overflow-x: hidden;
 }
+
 .titulo{
     font-family:Georgia, 'Times New Roman', Times, serif;
     text-decoration: beige;
@@ -19,3 +21,6 @@ body{
     font-weight:800;
 }
 
+.list{
+    width: 11.85rem;
+}

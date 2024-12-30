@@ -1,52 +1,60 @@
 {% extends 'base/base.html' %}
 
 {% block content %} 
-<main class="relative flex w-screen justify-center">
-    <section class="absolute flex w-full h-96 top-16 justify-center">
+<main class="relative flex flex-col w-100vh justify-center items-center">
+    <section class="relative flex w-full h-96 top-10 justify-center">
         <div class="absolute flex left-16 z-10 top-1">
             <h1 class="relative text-white text-xl font-bold">Top 20 filmes</h1>
         </div>
 
-        <div class="absolute flex w-screen h-10 top-36 z-10 text-white text-xl font-bold">
-            <button class="absolute flex left-6" id="btn-esquerda">Ant</button>
-            <button class="absolute flex right-6" id="btn-direita">Pró</button>
+        <div class="absolute flex  h-10 top-40 z-10 text-white text-xl font-bold left-4">
+            <button class="flex" id="btn-esquerda">Ant</button>
+        </div>
+
+        <div class="absolute flex h-10 top-40 z-10 text-white text-xl font-bold right-2"> 
+            <button class="flex" id="btn-direita">Pró</button>
         </div>
 
         <div class="absolute flex h-96 overflow-x-hidden w-11/12 top-10" id="lista">
             <ul class="flex gap-5">
+
                 {% for movie in popular_movie %}
-                    <li class="flex-shrink-0 w-48 rounded-md flex flex-col items-center relative">
+                    <li class="list flex-shrink-0 rounded-md flex flex-col">
                         <a href="{% url 'anilist:filme' movie.id %}">
-                            <img src="{{movie.poster}}" class="rounded-md" alt="">
+                            <img src="{{movie.poster}}" class="rounded-md h-72 " alt="">
                         </a>
-                        <a class="truncate" href="{% url 'anilist:filme' movie.id %}">
-                            <h2 class=" w-full text-center text-white text-sm font-bold mt-2 truncate">{{movie.name}}</h2>
+                        <a class="relative left-2 truncate" href="{% url 'anilist:filme' movie.id %}">
+                            <h2 class="w-full text-white text-sm  truncate">{{movie.name}}</h2>
                         </a>
                     </li>
                 {% endfor %}
+
             </ul>
         </div>
     </section>
 
-    <section class="absolute flex w-full h-96 top-96 justify-center">
+    <section class="relative flex w-full h-96 justify-center ">
         <div class="absolute flex left-16 z-10 top-24">
             <h1 class="relative text-white text-xl font-bold">Top 20 séries</h1>
         </div>
 
-        <div class="absolute flex w-screen h-10 top-60 z-10 text-white text-xl font-bold">
-            <button class="absolute flex left-6" id="btn-esquerda2">Ant</button>
-            <button class="absolute flex right-6" id="btn-direita2">Pró</button>
+        <div class="absolute flex h-10 top-64 z-10 text-white text-xl font-bold left-4">
+            <button class="flex" id="btn-esquerda2">Ant</button>
+        </div>
+
+        <div class="absolute flex h-10 top-64 z-10 text-white text-xl font-bold right-2"> 
+            <button class="flex" id="btn-direita2">Pró</button>
         </div>
 
         <div class="absolute flex h-96 overflow-x-hidden w-11/12 top-32" id="lista2">
-            <ul class="absolute flex gap-5">
+            <ul class="flex gap-5">
 
                 {% for series in popular_serie %}
-                    <li class="flex-shrink-0 w-48 rounded-md flex flex-col items-center">
-                        <a href="{% url 'anilist:serie' series.id %}" class="">
-                            <img src="{{series.poster}}" class="rounded-md" alt="">
+                    <li class="list flex-shrink-0 rounded-md flex flex-col">
+                        <a href="{% url 'anilist:serie' series.id %}">
+                            <img src="{{series.poster}}" class="rounded-md h-72" alt="">
                         </a>
-                        <a href="{% url 'anilist:serie' series.id %}" class="">
+                        <a href="{% url 'anilist:serie' series.id %}" class="truncate">
                             <h2 class="text-white text-sm text-truncate font-bold">{{series.name}}</h2>
                         </a>
                     </li>
