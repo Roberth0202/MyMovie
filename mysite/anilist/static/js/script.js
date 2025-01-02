@@ -1,37 +1,46 @@
-// Filmes
-const listaContainer = document.getElementById('lista'); // Selecionando a div pelo ID
-const btnEsquerda = document.getElementById('btn-esquerda');
-const btnDireita = document.getElementById('btn-direita');
+// movimenta os Filmes pra esqueda ou direita
+document.addEventListener('DOMContentLoaded', function() {
+  const btnEsquerda = document.getElementById('btn-esquerda');
+  const btnDireita = document.getElementById('btn-direita');
+  const lista = document.getElementById('lista');
 
-function rolarEsquerda() {
-  listaContainer.scrollLeft -= 400;
-} 
+  btnEsquerda.addEventListener('click', function() {
+      lista.scrollBy({
+          left: -400,
+          behavior: 'smooth'
+      });
+  });
 
-function rolarDireita() {
-  listaContainer.scrollLeft += 400;
-}
+  btnDireita.addEventListener('click', function() {
+      lista.scrollBy({
+          left: 400,
+          behavior: 'smooth'
+      });
+  });
+});
 
-btnEsquerda.addEventListener('click', rolarEsquerda);
-btnDireita.addEventListener('click', rolarDireita);
+//movimenta as Séries pra esqueda ou direita
+document.addEventListener('DOMContentLoaded', function() {
+  const btnEsquerda2 = document.getElementById('btn-esquerda2');
+  const btnDireita2 = document.getElementById('btn-direita2');
+  const lista2 = document.getElementById('lista2');
 
-// Séries
-const listaContainer2 = document.getElementById('lista2'); // Selecionando a div pelo ID
-const btnEsquerda2 = document.getElementById('btn-esquerda2');
-const btnDireita2 = document.getElementById('btn-direita2');
+  btnEsquerda2.addEventListener('click', function() {
+      lista2.scrollBy({
+          left: -400,
+          behavior: 'smooth'
+      });
+  });
 
-function rolarEsquerda2() {
-  listaContainer2.scrollLeft -= 400;
-} 
+  btnDireita2.addEventListener('click', function() {
+      lista2.scrollBy({
+          left: 400,
+          behavior: 'smooth'
+      });
+  });
+});
 
-function rolarDireita2() {
-  listaContainer2.scrollLeft += 400;
-}
-
-btnEsquerda2.addEventListener('click', rolarEsquerda2);
-btnDireita2.addEventListener('click', rolarDireita2);
-
-
-
+//pesquisa
 document.addEventListener('DOMContentLoaded', function() {
     let input = document.querySelector('input[name="q"]');
     let results = document.getElementById('search-results');
@@ -51,3 +60,4 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+

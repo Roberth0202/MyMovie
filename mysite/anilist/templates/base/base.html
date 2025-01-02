@@ -46,19 +46,38 @@
                 </form>
 
                 {% if user.is_authenticated %}
-                    <p class="font-bold text-lg text-white">{{ user.username }}</p>
-                    <form action="{% url 'anilist:logout' %}" method="POST">
-                        {% csrf_token %}
-                        <button type="submit" class="font-bold text-lg text-white">Sair</button>
-                    </form>
+                    <div class="relative">
+                        <button id="profile-button" class="flex items-center focus:outline-none border-solid" onclick="clickmenu()">
+                            <img src="{% static 'img/usuario1.png' %}" alt="Profile" class="w-10 h-10 rounded-full">
+                        </button>
+                        <div id="menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-10">
+                            <ul>
+                                <li><a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Configuração</a></li>
+                                <li><form action="{% url 'anilist:logout' %}" method="POST" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                                {% csrf_token %}
+                                <button type="submit" class="w-full text-left">Sair</button>
+                                </form></li>
+                            </ul>
+                        </div>
+                    </div>
                 {% else %}
                     <a href="{% url 'anilist:login' %}" class="log font-bold text-lg text-white">Login</a>
                 {% endif %}
-            </div>
+            </div>  
         </nav>
     </header>
 {% block content %}
 {% endblock %}
+<!--menu-->
+<script>
+    function clickmenu(){
+        if (menu.style.display == 'block') {
+            menu.style.display = 'none';
+        } else {
+            menu.style.display = 'block';
+        }
+    }
+</script>
 <!--js do tailwind-->
 <script src="{% static 'js/script.js' %}"></script>
 <!-- Toastr JS -->
