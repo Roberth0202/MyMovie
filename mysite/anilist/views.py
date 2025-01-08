@@ -126,7 +126,7 @@ def lista(request):
     # Inicializa variáveis para evitar erros se as condições não forem atendidas
     midias = []
 
-     # Iterar sobre os objetos encontrados e processar conforme o tipo de mídia
+    # Iterar sobre os objetos encontrados e processar conforme o tipo de mídia
     for obj in object_list:
         if obj.midia_type == 'movie':
             filme = info_movie(obj.media_id)  # Chamar a função para obter os detalhes do filme

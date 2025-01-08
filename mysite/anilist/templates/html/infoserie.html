@@ -33,10 +33,21 @@
         </div>
     </div>
 
+    <!-- Sistema de mensagens -->
+    {% if messages %}
+        <div class="absolute flex flex-col items-center w-full top-5">
+            {% for message in messages %}
+                <div class="z-10 text-white font-bold p-3 rounded-lg mb-2 {{ message.tags }} " id="notification">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <!--Ser tiver logado adiciona ou remove-->
     {% if user.is_authenticated %}
         <!--Adicionar e remover da lista-->
-        <form class="absolute z-auto left-96 top-80 flex justify-between space-x-4"  method="POST">
+        <form class="absolute z-auto left-96 top-80 flex justify-between space-x-4" id="form" method="POST">
             {% csrf_token %}
                 <input type="hidden" name="media_id" value="{{serie.id}}">
                 <input type="hidden" name="midia_type" value="tv">

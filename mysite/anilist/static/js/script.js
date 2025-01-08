@@ -61,3 +61,35 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+
+//Aguarde o Dom carregar
+document.addEventListener('DOMContentLoaded', function() {
+    // Seleciona todas as mensagens com ID 'notification'
+    const notifications = document.querySelectorAll('#notification');
+
+    //Define o tempo de exibição da mensagem
+    const duration = 1500; // 3 segundos
+
+    notifications.forEach(notification => {
+        //configura o tempo de exibição para cada mensagem
+        setTimeout(() => {
+            //Configura a mensagem para desaparecer
+            notification.style.transition = "opacity 0.3s ease"; // transição de 0.5 segundos suave
+            notification.style.opacity = 0; //esconde a mensagem
+            setTimeout(() => notification.remove(), 500); //remove a mensagem após 0.5 segundos
+        }, duration);
+    });
+});
+
+//Evita o reenvio do formulário
+const form = document.getElementById('form');
+form.addEventListener('submit', function(event) {
+    //salva os dados do formulario em uma variavel local ou processa como necessário
+    sessionStorage.setItem('formSubmitted', 'true');
+});
+
+if (sessionStorage.getItem('formSubmitted')){
+    //se o formulário foi enviado, impede o reenvio
+    sessionStorage.removeItem('formSubmitted');
+    window.location.href = window.location.href; //redireciona para a mesma página
+}
