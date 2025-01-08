@@ -1,28 +1,45 @@
 {% extends 'base/logcad.html' %}
 
 {% block content %}
-<div class="absolute  flex w-28 h-12 top-10 justify-center">
-    <H1 class=" text-white text-4xl  font-bold">Login</H1>
+
+<!-- Container para o título de Login -->
+<div class="absolute flex w-28 h-12 top-10 justify-center">
+    <h1 class="text-white text-4xl font-bold">Login</h1>
 </div>
+
+<!-- Exibição de mensagens de erro ou sucesso -->
 {% if messages %}
 <ul class="absolute flex top-24 messages">
     {% for message in messages %}
-    <li {% if message.tags %} class="relative flex text-red-700 {{ message.tags }}" {% endif %}>
-        {{ message }}
-    </li>
+        {% if 'login' in message.tags %}    
+            <li class="relative flex text-red-700 {{ message.tags }}">
+                {{ message }}
+            </li>
+        {% endif %}
     {% endfor %}
 </ul>
 {% endif %}
+
+<!-- Formulário de login -->
 <div class="absolute flex w-72 h-36 z-10 top-32">
+
+    <!-- Formulário de login -->
     <form action="{% url 'anilist:login' %}" class="relative flex-col space-y-9" method="POST">
         {% csrf_token %}
-        <input type="text" id="username" name="username" class="box-border w-72 p-2 bg-transparent focus:border-b-2 border-white focus:invalid:border-pink-500 outline-0  text-white" autofocus autocomplete="off" placeholder="Usuario">
+        <!-- Campo de entrada para o nome de usuário -->
+        <input type="text" id="username" name="username" class="box-border w-72 p-2 bg-transparent focus:border-b-2 border-white focus:invalid:border-pink-500 outline-0 text-white" autofocus autocomplete="off" placeholder="Usuario">
+        <!-- Campo de entrada para a senha -->
         <input type="password" id="password" name="password" class="box-border w-72 p-2 bg-transparent focus:border-b-2 border-white outline-0 text-white" placeholder="Senha">
-        <button type="submit" class="absolute w-24 h-12 left-24 rounded-lg font-medium top-40 bg-orange-600 text-white">Entrar</button>
+        <!-- Botão de envio do formulário -->
+        <button type="submit" class="absolute w-24 h-12 left-24 rounded-lg font-medium top-44 bg-orange-600 text-white">Entrar</button>
     </form>
-    <p class="absolute text-white text-sm absolute left-0 top-40">Esqueceu a senha?<a href="#" class="text-sky-500"> Clique aqui</a></p>
-    <div class="absolute flex top-72 ">
-        <p class="relative text-white text-sm ">Não tem uma conta?<a href="{% url 'anilist:register' %}" class='text-sky-500'>cadastre-se</a></p>
+
+    <!-- Link para recuperação de senha -->
+    <p class="absolute text-white text-sm left-0 top-44">Esqueceu a senha?<a href="#" class="text-sky-500"> Clique aqui</a></p>
+
+    <!-- Link para cadastro de nova conta -->
+    <div class="absolute flex top-72">
+        <p class="relative text-white text-sm">Não tem uma conta?<a href="{% url 'anilist:register' %}" class='text-sky-500'>cadastre-se</a></p>
     </div>
 </div>
 

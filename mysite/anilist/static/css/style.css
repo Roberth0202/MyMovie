@@ -21,7 +21,19 @@ body{
     font-weight:800;
 }
 
+.step-links a:hover {
+    background-color: gray;
+    border-radius: 9999px;
+}
+
 .list{
     width: 11.85rem;
 }
 
+.sucesso {
+    background-color: #1a7f37; /* Verde escuro */
+}
+
+.erro {
+    background-color: #e63946; /* Vermelho */
+}

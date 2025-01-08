@@ -9,27 +9,58 @@ from django.core.exceptions import ValidationError
 from .utils import adicionar_midia, remover_midia
 from .models import Lista
 
+# Função para verificar se a mídia já está na lista
+def verificar_midia_na_lista(user_id, media_id, midia_type):
+    return Lista.objects.filter(user_id=user_id, media_id=media_id, midia_type=midia_type).exists()
 
 #Adiciona filme/serie na lista
 @login_required(login_url = '/page/login/')
 def add_to_list(request, media_id, midia_type):
+    """Adiciona uma mídia à lista do usuário.
+
+    Args:
+        request (HttpRequest): O objeto de solicitação HTTP.
+        media_id (int): O ID da mídia a ser adicionada.
+        midia_type (str): O tipo de mídia (por exemplo, 'filme', 'série').
+
+    Returns:
+        HttpResponse: Redireciona para a página de login se o usuário não estiver autenticado.
+        Caso contrário, adiciona a mídia à lista do usuário e exibe uma mensagem de sucesso.
+        Se ocorrer um erro (por exemplo, a mídia já está na lista), exibe uma mensagem de erro.
+    """
     try:
         adicionar_midia(request.user, media_id, midia_type)
-        messages.success(request, 'Filme/Série adicionado(a) à sua lista!')
-    except ValidationError as e:
-        messages.error(request, f'Erro: {e}')
-    except Exception as e:
-        messages.error(request, f'Houve um erro ao adicionar o filme/série: {e}')
+        messages.success(request, 'Foi adicionado á sua lista!', extra_tags='sucesso')
+    except Exception:
+        messages.error(request, f'Mídia ja está na sua lista.', extra_tags='erro')
 
-#remove o filme da lista
-@login_required(login_url ='/page/login/')                
+@login_required(login_url = '/page/login/')
 def remove_from_list(request, media_id, midia_type):
+    """Remove uma mídia da lista do usuário.
+    Args:
+        request (HttpRequest): O objeto de solicitação HTTP que contém informações sobre a solicitação atual.
+        media_id (int): O ID da mídia a ser removida.
+        midia_type (str): O tipo de mídia a ser removida.
+    Raises:
+        ValueError: Se a mídia não estiver na lista do usuário.
+    Exceções:
+        ValueError: Se a mídia não estiver na lista do usuário.
+        Exception: Se ocorrer um erro ao remover a mídia da lista.
+    Mensagens:
+        messages.success: Se a mídia for removida com sucesso da lista do usuário.
+        messages.error: Se ocorrer um erro ao remover a mídia da lista ou se a mídia não estiver na lista do usuário.
+    """
     try:
-        remover_midia(request.user, media_id, midia_type)
-        messages.success(request, 'Filme/Série removido(a) da sua lista!')
-    except Exception as e:
-        messages.error(request, f'Houve um erro ao remover o filme/série: {e}')
+        if not verificar_midia_na_lista(request.user, media_id, midia_type):  # Adicione uma verificação
+            raise ValueError("Mídia não está na lista.")
         
+        remover_midia(request.user, media_id, midia_type)
+        messages.success(request, 'Foi removido da sua lista!', extra_tags='sucesso')
+    except ValueError as e:
+        messages.error(request, str(e), extra_tags='erro')
+    except Exception:
+        messages.error(request, 'Erro ao remover mídia da lista.', extra_tags='erro')
+
 #Tela home
 def home(request):
     popular_movie = filme_populares
@@ -138,6 +169,7 @@ def filmes(request):
     }
     return render(request, 'html/filmes.html', context)
 
+
 def series(request):
     page = request.GET.get("page", 1)
     
@@ -177,7 +209,7 @@ def login(request):
             auth_login(request, user)
             return redirect('/page/home/')
         else:
-            messages.add_message(request, messages.ERROR, 'Usuário ou senha incorretos')
+            messages.add_message(request, messages.ERROR, 'Usuário ou senha incorretos', extra_tags="login")
             return render(request, 'html/login.html')
     return render(request, 'html/login.html')
 

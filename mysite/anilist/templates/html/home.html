@@ -65,25 +65,4 @@
     </section>
 </main>
 
-<!-- Lógica para exibir mensagens do Django como notificações -->
-{% if messages %}
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    {% for message in messages %}
-      toastr.options = {
-        "closeButton": true,
-        "progressBar": true,
-        "positionClass": "toast-top-right",
-        "timeOut": "3000"
-        };
-        {% if message.tags == 'success' %}
-        toastr.success("{{ message|escapejs }}");  // Usar escapejs para evitar conflitos de sintaxe
-        {% elif message.tags == 'error' %}
-        toastr.error("{{ message|escapejs }}");
-        {% endif %}
-    {% endfor %}
-  });
-</script>
-{% endif %}
-
 {% endblock %}

@@ -34,16 +34,29 @@
         </div>
     </div>
     
+    <!-- Sistema de mensagens -->
+    {% if messages %}
+        <div class="absolute flex flex-col items-center w-full top-5">
+            {% for message in messages %}
+                <div class="z-10 text-white font-bold p-3 rounded-lg mb-2 {{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <!--Ser tiver logado adiciona ou remove-->
     {% if user.is_authenticated %}
+
         <!--Adicionar e remover da lista-->
-        <form class="absolute z-auto left-96 top-80 flex justify-between space-x-4"  method="POST">
+        <form class="absolute z-auto left-96 top-80 flex justify-between space-x-4" method="POST">
             {% csrf_token %}
-                <input type="hidden" name="media_id" value="{{filme.id}}">
-                <input type="hidden" name="midia_type" value="movie">
-                <button class="z-10 text-white font-bold" type="submit" name="action" value="add">add</button>
-                <button class="z-10 text-white font-bold" type="submit" name="action" value="remove">remove</button>
+            <input type="hidden" name="media_id" value="{{filme.id}}">
+            <input type="hidden" name="midia_type" value="movie">
+            <button class="z-10 text-white font-bold" type="submit" name="action" value="add">add</button>
+            <button class="z-10 text-white font-bold" type="submit" name="action" value="remove">remove</button>
         </form>
+        
     <!--Se não. vai pra pagina de login-->
     {% else %}
     <div class="absolute z-auto left-96 top-80 flex justify-between gap-4">
