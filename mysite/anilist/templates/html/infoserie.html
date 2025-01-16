@@ -37,7 +37,7 @@
     {% if messages %}
         <div class="absolute flex flex-col items-center w-full top-5">
             {% for message in messages %}
-                <div class="z-10 text-white font-bold p-3 rounded-lg mb-2 {{ message.tags }} " id="notification">
+                <div class="z-10 text-white font-bold p-2 rounded-lg mb-2 {{ message.tags }} " id="notification">
                     {{ message }}
                 </div>
             {% endfor %}

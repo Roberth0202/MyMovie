@@ -4,6 +4,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout
+from django.contrib.auth.password_validation import get_password_validators
+from django.core.exceptions import ValidationError
+from django.conf import settings
 from .movie_functions import *
 from django.core.exceptions import ValidationError
 from .utils import adicionar_midia, remover_midia
@@ -227,13 +230,40 @@ def register(request):
         password1 = request.POST.get("pass1")
         password2 = request.POST.get("pass2")
         
-        if password1 == password2 and email1 == email2:
-            user = User.objects.create_user(username=username, email=email1, password=password1)
-            user.save()
-            return render(request, 'html/login.html')
-        else:
-            messages.add_message(request, messages.ERROR, 'Senha ou email não conferem')
+        # Verificar se as senhas e emails são iguais
+        if password1 != password2:
+            messages.error(request, 'As senhas não conferem.', extra_tags='erro')
             return render(request, 'html/cad.html')
 
+        # Verificar se os emails são iguais
+        if email1 != email2:
+            messages.error(request, 'Os emails não conferem.', extra_tags='erro')
+            return render(request, 'html/cad.html')
 
+        # Obtém os validadores configurados no settings.py
+        validators = get_password_validators(settings.AUTH_PASSWORD_VALIDATORS)
+        
+        # Verifica cada validador sequencialmente
+        for validator in validators:
+            try:
+                validator.validate(password1)
+            except ValidationError as e:
+                messages.error(request, e.messages[0], extra_tags='erro')
+                return render(request, 'html/cad.html')
+
+        # Verificar se o nome de usuário ou email já existem
+        if User.objects.filter(username=username).exists():
+            messages.error(request, 'Nome de usuário já existe.', extra_tags='erro')
+            return render(request, 'html/cad.html')
+        
+        # Verificar se o email já está em uso
+        if User.objects.filter(email=email1).exists():
+            messages.error(request, 'Email já está em uso.', extra_tags='erro')
+            return render(request, 'html/cad.html')
+
+        user = User.objects.create_user(username=username, email=email1, password=password1)
+        user.save()
+        messages.success(request, 'Cadastro realizado com sucesso!', extra_tags='sucesso')
+        return redirect('/page/login/')
+    
     return render(request, 'html/cad.html')

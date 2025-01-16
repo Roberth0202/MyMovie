@@ -30,10 +30,19 @@ body{
     width: 11.85rem;
 }
 
+.add{
+    size: 1.5rem;
+    
+}
 .sucesso {
-    background-color: #1a7f37; /* Verde escuro */
+    background-color: #14532d; /* Verde escuro */
+    color: #22c55e; /* Verde mais claro */
+    border-left: 4px solid #22c55e; /* Borda verde na esquerda */
+    padding-left: 8px; /* Espaço entre a borda e o texto */
 }
 
 .erro {
-    background-color: #e63946; /* Vermelho */
+    background-color: #7f1d1d; /* Vermelho meio escuro */
+    color: #fecaca; /* Vermelho meio claro */
+    border-left: 5px solid #dc2626; /* Borda esquerda vermelho meio claro */
 }

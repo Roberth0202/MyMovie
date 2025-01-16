@@ -1,0 +1,8 @@
+
+.overlay{
+    background-color: rgba(29, 78, 216, 0.3); /* Azul com opacidade */
+        
+    }
+    .content{
+        box-shadow: -12px 0 15px rgba(0, 0, 0, 0.8);
+    }
