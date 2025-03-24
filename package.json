@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@tailwindcss/cli": "^4.0.15",
+    "tailwindcss": "^4.0.15"
+  },
+  "scripts": {
+    "watch:css": "tailwindcss -i ./mysite/anilist/static/src/styles.css -o ./mysite/anilist/static/dist/styles.css --watch"
+  }
+}
