@@ -244,7 +244,7 @@ def Series(page):
     total_pages = min(dados['total_pages'], max_pages)  # Limita o total de páginas
     
     lista_series = []
-     
+    
     for serie in dados['results']:
 
         if serie['poster_path'] == None:
