@@ -1,0 +1,49 @@
+{% extends 'base/logcad.html' %}
+
+{% block content %}
+
+
+<!-- Formulário de login -->
+<div class="content_form">
+    
+        <!-- Container para o título de Login -->
+    <div class="login absolute flex top-20 ">
+        <h1 class="text-white text-4xl font-bold ">Login</h1>
+    </div>
+
+    <!-- Exibição de mensagens de erro ou sucesso -->
+    {% if messages %}
+    <ul class="absolute flex top-10 messages">
+        {% for message in messages %}
+            {% if 'login' in message.tags %}    
+                <li class="relative flex text-red-700 {{ message.tags }}">
+                    {{ message }}
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <!-- Formulário de login -->
+    <form action="{% url 'anilist:login' %}" class="form" method="POST">
+        {% csrf_token %}
+        <!-- Campo de entrada para o nome de usuário -->
+        <input type="text" id="username" name="username" class="" autofocus autocomplete="off" placeholder="Usuario">
+        <!-- Campo de entrada para a senha -->
+        <input type="password" id="password" name="password" class=" " placeholder="Senha">
+        <!-- Botão de envio do formulário -->
+        <button type="submit" class="botao  w-24 h-12  rounded-lg font-medium bg-orange-600 text-white">Entrar</button>
+    </form>
+
+    <!-- Link para recuperação de senha -->
+    <p class="absolute top-75 ">
+        <a href="#" style="color: rgb(3, 162, 224);"> Esqueci minha senha</a>
+    </p>
+
+    <!-- Link para cadastro de nova conta -->
+    <div class="absolute flex top-105">
+        <p class="relative text-white text-sm">Não tem uma conta?<a href="{% url 'anilist:register' %}" style="color: rgb(3, 162, 224);"> Cadastre-se</a></p>
+    </div>
+</div>
+
+{% endblock %}

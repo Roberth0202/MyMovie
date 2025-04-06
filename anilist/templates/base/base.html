@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyMovie</title>
+    {% load static %}
+    <!-- google font -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <!-- Estilos internos -->
+    <link href="{% static 'dist/styles.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+</head>
+
+<body class="overflow-x-hidden h-full">
+    <header class="h-16 max-w-100%">
+        <nav class="flex items-center justify-between h-full px-4 sm:px-6 lg:px-8" role="navigation" aria-label="Main Navigation">
+            <!-- Título à esquerda -->
+            <div class="titulo text-white text-4xl">
+                <a href="{% url 'anilist:home' %}">MyMovie</a>
+            </div>
+
+            <!-- Rotas no centro -->
+            <div class="flex-1 flex justify-center">
+                <ul class="flex gap-6 list-none">
+                    <li class="flex justify-center items-center ba w-20 h-10 rounded-lg text-lg">
+                        <a href="{% url 'anilist:home' %}" class="rotas text-white">Home</a>
+                    </li>
+                    <li class="flex justify-center items-center w-20 h-10 rounded-lg text-lg">
+                        <a href="{% url 'anilist:lista' %}" class="rotas text-white">Lista</a>
+                    </li>
+                    <li class="flex justify-center items-center w-20 h-10 rounded-lg text-lg">
+                        <a href="{% url 'anilist:filmes' %}" class="rotas text-white">Filmes</a>
+                    </li>
+                    <li class="flex text-white justify-center items-center  w-20 h-10 rounded-lg text-lg">
+                        <a href="{% url 'anilist:series' %}" class="rotas">Séries</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Pesquisa e login à direita -->
+            <div class="flex items-center gap-4">
+                <form action="{% url 'anilist:pesquisa'%}" method="GET" class="flex items-center">
+                    <input class="font-bold text-md text-white bg-transparent outline-none border-b-2 border-white" type="search" name="q" autocomplete="off" placeholder="Pesquisar">
+                </form>
+
+                {% if user.is_authenticated %}
+                    <div class="relative">
+                        <button id="profile-button" class="flex items-center focus:outline-none border-solid" onclick="clickmenu()">
+                            <img src="{% static 'img/usuario1.png' %}" alt="Profile" class="w-10 h-10 rounded-full">
+                        </button>
+                        <div id="menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-10">
+                            <ul>
+                                <li><a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Configuração</a></li>
+                                <li><form action="{% url 'anilist:logout' %}" method="POST" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                                {% csrf_token %}
+                                <button type="submit" class="w-full text-left">Sair</button>
+                                </form></li>
+                            </ul>
+                        </div>
+                    </div>
+                {% else %}
+                    <a href="{% url 'anilist:login' %}" class="log font-bold text-lg text-white">Login</a>
+                {% endif %}
+            </div>  
+        </nav>
+    </header>
+{% block content %}
+{% endblock %}
+
+<!--menu-->
+<script>
+    function clickmenu(){
+        if (menu.style.display == 'block') {
+            menu.style.display = 'none';
+        } else {
+            menu.style.display = 'block';
+        }
+    }
+</script>
+<!--js do tailwind-->
+<script src="{% static 'js/script.js' %}"></script>
+<!-- Toastr JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+</body>
+</html>
