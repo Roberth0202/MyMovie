@@ -1,8 +1,50 @@
+body {
+    background-color: #000;
+    font-family: 'Courier New', Courier, monospace;
+}
+.content {
+    position: relative;
+    display: flex;
+    backdrop-filter: blur(3px);
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    width: min( 25em, 90%);
+    height: min( 35em, 143%);
+}
 
-.overlay{
-    background-color: rgba(29, 78, 216, 0.3); /* Azul com opacidade */
-        
-    }
-    .content{
-        box-shadow: -12px 0 15px rgba(0, 0, 0, 0.8);
-    }
+.content_form{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: min( 25em, 90%);
+    height: min( 35em, 100%);
+    z-index: 1;
+}
+
+.botao {
+    position: absolute;
+    cursor: pointer;
+    top: 21.5em;
+}
+
+.form {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: min( 25em, 90%);
+    height: 100%; 
+    gap: 15px;
+    padding: 10px; /* Adiciona espaçamento interno */
+}
+.form input {
+    position: relative;
+    width: min( 16em, 90%);
+    top: 10em;
+    color: white;
+    outline: none;
+    border: none;
+    border-bottom: gray 2px solid;
+    height: 2.5rem; /* Define a altura dos inputs */
+    margin-bottom: 1rem; /* Espaçamento entre os inputs */
+}

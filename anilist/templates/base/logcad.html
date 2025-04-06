@@ -9,12 +9,10 @@
     <link rel="stylesheet" href="{% static 'css/cadlog.css'%}">
 </head>
 
-<body class="relative flex h-screen justify-center items-center" style="background-image: url('{% static 'img/cad_wallpaper.jpg' %}'); background-size: cover; background-position: center;">
-    <!-- Overlay -->
-    <div class="overlay absolute inset-0"></div>
+<body class="flex h-screen justify-center items-center " style="background-image: url('{% static 'img/TelaDeFundo.jpg' %}'); background-size: cover; background-position: center;">
 
     <!-- Conteúdo -->
-    <div class="content absolute flex bg-black z-10 xl:w-1/2 lg:w-1/2 md:w-1/2 sm:w-2/4 w-3/4 h-full shadow right-0 justify-center items-center">
+    <div class="content ">
         {% block content %}
         {% endblock %}
     </div>
