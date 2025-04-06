@@ -33,7 +33,7 @@ def add_to_list(request, media_id, midia_type):
     """
     try:
         adicionar_midia(request.user, media_id, midia_type)
-        messages.success(request, 'Foi adicionado á sua lista!', extra_tags='sucesso')
+        messages.success(request, 'Foi adicionado à sua lista!', extra_tags='sucesso')
     except Exception:
         messages.error(request, f'Mídia ja está na sua lista.', extra_tags='erro')
 
