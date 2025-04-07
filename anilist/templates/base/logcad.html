@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyMovie</title>
+    {% load static %}
+    <link href="{% static 'dist/styles.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/cadlog.css'%}">
+</head>
+
+<body class="flex h-screen justify-center items-center " style="background-image: url('{% static 'img/TelaDeFundo.jpg' %}'); background-size: cover; background-position: center;">
+
+    <!-- Conteúdo -->
+    <div class="content ">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

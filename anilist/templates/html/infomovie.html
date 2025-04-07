@@ -1,0 +1,73 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+{% if filme %}
+<!--da informação dos filme poster, nome, genero, descrição do filme-->>
+<main class="relative justify-items-center items-center ">
+    <div class="relative flex w-screen h-screen ">
+
+        <!--POSTER-->
+        <div class="absolute left-20 top-20">
+            <img src="{{filme.poster}}" class="flex w-72 h-96 rounded-xl" alt="">
+        </div>
+
+        <!--NOME DO FILME-->
+        <div class="absolute flex w-auto left-96 top-20">
+            <h1 class="text-3xl text-white font-bold">{{filme.name}}</h1>
+        </div>
+
+        <!--GENERO DO FILME-->
+        <div class="absolute flex gap-3 top-32 left-96">
+            {% for genre in filme.genre %}
+            <div class="flex bg-gray-800 rounded-xl px-3">
+                <p class="text-white ">{{ genre }}</p>
+            </div>
+            {% endfor %}
+        </div >
+
+        <!--DESCRIÇÃO DO FILME-->
+        <div class="absolute flex w-2/3 top-44 left-96">
+            <p class="text-white text-lg ">{{filme.description}}</p>
+        <div>
+
+        </div>
+    </div>
+    
+    
+    <!-- Sistema de mensagens -->
+    {% if messages %}
+        <div class="absolute flex flex-col items-center w-full top-5">
+            {% for message in messages %}
+                <div class="z-10 text-white font-bold p-2 text-red rounded-lg mb-1 {{ message.tags }} " id="notification">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!--Ser tiver logado adiciona ou remove-->
+    {% if user.is_authenticated %}
+
+        <!--Adicionar e remover da lista-->
+        <form class="absolute z-auto left-96 top-80 flex justify-between space-x-4" id="form" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="media_id" value="{{filme.id}}">
+            <input type="hidden" name="midia_type" value="movie">
+            <button class="z-10 text-white font-bold" type="submit" name="action" value="add"><span class="material-symbols-outlined">add</span></button>
+            <button class="z-10 text-white font-bold" type="submit" name="action" value="remove"><span class="material-symbols-outlined">remove</span></button>
+        </form>
+        
+    <!--Se não. vai pra pagina de login-->
+    {% else %}
+    <div class="absolute z-auto left-96 top-80 flex justify-between gap-4"></button></a>
+        <a href="{% url 'anilist:login' %}"><button class="z-10 text-white font-bold" type="submit" name="" value="remove">remove</button></a>
+    </div>
+    {% endif %}
+    
+
+</main>
+
+{% endif %}
+
+{% endblock %}

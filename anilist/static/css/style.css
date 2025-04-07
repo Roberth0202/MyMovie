@@ -1,0 +1,48 @@
+body{
+    background-color: rgb(19, 19, 19);
+    overflow-x: hidden;
+}
+
+.titulo{
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    text-decoration: beige;
+}
+.rotas{
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    text-decoration: beige;
+}
+
+.log{
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    text-decoration: beige;
+}
+
+.step-links {
+    font-weight:800;
+}
+
+.step-links a:hover {
+    background-color: gray;
+    border-radius: 9999px;
+}
+
+.list{
+    width: 11.85rem;
+}
+
+.add{
+    size: 1.5rem;
+    
+}
+.sucesso {
+    background-color: #14532d; /* Verde escuro */
+    color: #22c55e; /* Verde mais claro */
+    border-left: 4px solid #22c55e; /* Borda verde na esquerda */
+    padding-left: 8px; /* Espaço entre a borda e o texto */
+}
+
+.erro {
+    background-color: #7f1d1d; /* Vermelho meio escuro */
+    color: #fecaca; /* Vermelho meio claro */
+    border-left: 5px solid #dc2626; /* Borda esquerda vermelho meio claro */
+}
