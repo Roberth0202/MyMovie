@@ -1,68 +1,65 @@
 {% extends 'base/base.html' %}
 
 {% block content %} 
-<main class="relative flex flex-col w-100vh justify-center items-center">
-    <section class="relative flex w-full h-96 top-10 justify-center">
-        <div class="absolute flex left-16 z-10 top-1">
-            <h1 class="relative text-white text-xl font-bold">Top 20 filmes</h1>
+<main class="relative flex flex-col w-full justify-center items-center top-16 py-8 space-y-24">
+    <!-- Seção de Filmes -->
+    <section class="relative flex w-full h-96 justify-center">
+        <div class="Tranding absolute flex left-16 z-10 top-1">
+            <h1 class="relative text-white text-xl font-bold">Filmes em alta</h1>
         </div>
 
-        <div class="absolute flex  h-10 top-40 z-10 text-white text-xl font-bold left-4">
+        <div class="seta-rolagem flex h-10 top-40 text-white text-xl font-bold left-4">
             <button class="flex" id="btn-esquerda">Ant</button>
         </div>
 
-        <div class="absolute flex h-10 top-40 z-10 text-white text-xl font-bold right-2"> 
+        <div class="seta-rolagem absolute flex h-10 top-40 text-white text-xl font-bold right-2"> 
             <button class="flex" id="btn-direita">Pró</button>
         </div>
 
         <div class="absolute flex h-96 overflow-x-hidden w-11/12 top-10" id="lista">
             <ul class="flex gap-5">
-
                 {% for movie in popular_movie %}
-                    <li class="list flex-shrink-0 rounded-md flex flex-col">
+                    <li class="list-serie-filme relative flex-shrink-0 rounded-md flex flex-col items-center">
                         <a href="{% url 'anilist:filme' movie.id %}">
-                            <img src="{{movie.poster}}" class="rounded-md h-72 " alt="">
+                            <img src="{{movie.poster}}" class="rounded-md h-72" alt="">
                         </a>
-                        <a class="relative left-2 truncate" href="{% url 'anilist:filme' movie.id %}">
-                            <h2 class="w-full text-white text-sm  truncate">{{movie.name}}</h2>
+                        <a class="relative left-2" href="{% url 'anilist:filme' movie.id %}">
+                            <p class="w-full text-white text-sm font-bold text-ellipsis">{{movie.name}}</p>
                         </a>
                     </li>
                 {% endfor %}
-
             </ul>
         </div>
     </section>
 
-    <section class="relative flex w-full h-96 justify-center ">
-        <div class="absolute flex left-16 z-10 top-24">
-            <h1 class="relative text-white text-xl font-bold">Top 20 séries</h1>
+    <!-- Seção de Séries -->
+    <section class="relative flex w-full h-96 justify-center">
+        <div class="Tranding absolute flex left-16 z-10 top-1">
+            <h1 class="relative text-white text-xl font-bold">Séries em alta</h1>
         </div>
 
-        <div class="absolute flex h-10 top-64 z-10 text-white text-xl font-bold left-4">
+        <div class="seta-rolagem absolute flex h-10 top-40 text-white text-xl font-bold left-4">
             <button class="flex" id="btn-esquerda2">Ant</button>
         </div>
 
-        <div class="absolute flex h-10 top-64 z-10 text-white text-xl font-bold right-2"> 
+        <div class="seta-rolagem absolute flex h-10 top-40 text-white text-xl font-bold right-2"> 
             <button class="flex" id="btn-direita2">Pró</button>
         </div>
 
-        <div class="absolute flex h-96 overflow-x-hidden w-11/12 top-32" id="lista2">
+        <div class="absolute flex h-96 overflow-x-hidden w-11/12 top-10" id="lista2">
             <ul class="flex gap-5">
-
                 {% for series in popular_serie %}
-                    <li class="list flex-shrink-0 rounded-md flex flex-col">
+                    <li class="list-serie-filme flex-shrink-0 rounded-md flex flex-col items-center">
                         <a href="{% url 'anilist:serie' series.id %}">
                             <img src="{{series.poster}}" class="rounded-md h-72" alt="">
                         </a>
-                        <a href="{% url 'anilist:serie' series.id %}" class="truncate">
-                            <h2 class="text-white text-sm text-truncate font-bold">{{series.name}}</h2>
+                        <a href="{% url 'anilist:serie' series.id %}" class="relative left-2">
+                            <p class="w-full text-white text-sm font-bold text-ellipsis">{{series.name}}</p>
                         </a>
                     </li>
                 {% endfor %}
-
             </ul>
         </div>
     </section>
 </main>
-
 {% endblock %}

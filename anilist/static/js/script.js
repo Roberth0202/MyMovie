@@ -40,6 +40,46 @@ btnDireita2.addEventListener('click', function() {
 });
 });
 
+//fazer o menu funcionar
+function toggleMenu() {
+    const hamburger = document.querySelector('.hamburger-icon');
+    const navLinks = document.querySelector('.nav-links');
+    
+    hamburger.classList.toggle('open');
+    navLinks.classList.toggle('active');
+    
+    // Impedir rolagem quando o menu está aberto
+    document.body.classList.toggle('menu-open');
+}
+
+  // Fechar o menu ao clicar em um link
+document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+    const hamburger = document.querySelector('.hamburger-icon');
+    const navLinks = document.querySelector('.nav-links');
+
+    hamburger.classList.remove('open');
+    navLinks.classList.remove('active');
+    document.body.classList.remove('menu-open');
+    });
+});
+
+// Fechar o menu quando clicar fora dele
+document.addEventListener('click', (event) => {
+    const hamburger = document.querySelector('.hamburger-icon');
+    const navLinks = document.querySelector('.nav-links');
+    
+    // Verificar se o menu está aberto e se o clique não foi no menu ou no ícone
+    if (navLinks.classList.contains('active') && 
+        !event.target.closest('.nav-links') && 
+        !event.target.closest('.hamburger-icon')) {
+        
+        hamburger.classList.remove('open');
+        navLinks.classList.remove('active');
+        document.body.classList.remove('menu-open');
+    }
+});
+
 //pesquisa
 document.addEventListener('DOMContentLoaded', function() {
     let input = document.querySelector('input[name="q"]');

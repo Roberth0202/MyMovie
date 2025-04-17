@@ -6,48 +6,82 @@
     <title>MyMovie</title>
     {% load static %}
     <!-- google font -->
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0&icon_names=menu" />
     <!-- Estilos internos -->
     <link href="{% static 'dist/styles.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     
 </head>
 
-<body class="overflow-x-hidden h-full">
-    <header class="h-16 max-w-100%">
-        <nav class="flex items-center justify-between h-full px-4 sm:px-6 lg:px-8" role="navigation" aria-label="Main Navigation">
+<body class="">
+    <header class="">
+        <nav class="navbar" role="navigation" aria-label="Main Navigation">
+            
             <!-- Título à esquerda -->
-            <div class="titulo text-white text-4xl">
+            <div class="logo text-white text-4xl">
                 <a href="{% url 'anilist:home' %}">MyMovie</a>
+            </div>
+            
+            <!-- Menu hamburguer para mobile -->
+            <div class="hamburger-menu">
+                <div class="hamburger-icon" onclick=" toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
 
             <!-- Rotas no centro -->
-            <div class="flex-1 flex justify-center">
-                <ul class="flex gap-6 list-none">
-                    <li class="flex justify-center items-center ba w-20 h-10 rounded-lg text-lg">
-                        <a href="{% url 'anilist:home' %}" class="rotas text-white">Home</a>
-                    </li>
+            <div class="content-links">
+                <ul class="nav-links flex gap-6">
+
                     <li class="flex justify-center items-center w-20 h-10 rounded-lg text-lg">
-                        <a href="{% url 'anilist:lista' %}" class="rotas text-white">Lista</a>
-                    </li>
+                        <a href="{% url 'anilist:home' %}" class="rotas text-white">Inicio</a></li>
                     <li class="flex justify-center items-center w-20 h-10 rounded-lg text-lg">
-                        <a href="{% url 'anilist:filmes' %}" class="rotas text-white">Filmes</a>
-                    </li>
+                        <a href="{% url 'anilist:lista' %}" class="rotas text-white">Lista</a></li>
+                    <li class="flex justify-center items-center w-20 h-10 rounded-lg text-lg">
+                        <a href="{% url 'anilist:filmes' %}" class="rotas text-white">Filmes</a></li>
                     <li class="flex text-white justify-center items-center  w-20 h-10 rounded-lg text-lg">
-                        <a href="{% url 'anilist:series' %}" class="rotas">Séries</a>
+                        <a href="{% url 'anilist:series' %}" class="rotas">Séries</a></li>
+
+                    <!-- Mobile: Área de pesquisa e usuário (será movida para o menu mobile) -->
+                    <li class="mobile-user">
+                        
+                        {% if user.is_authenticated %}
+                            <div class="mobile-user-info">
+                                <img src="{% static 'img/usuario1.png' %}" alt="Profile" class="w-10 h-10 rounded-full inline-block">
+                                <span class="ml-2 text-white">Minha Conta</span>
+                                <ul class="mobile-user-menu">
+                                    <li><a href="#" class="block py-2 text-white hover:text-gray-300">Configuração</a></li>
+                                    <li>
+                                        <form action="{% url 'anilist:logout' %}" method="POST" class="block py-2 text-white hover:text-gray-300">
+                                        {% csrf_token %}
+                                        <button type="submit" class="w-full text-left text-white">Sair</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% else %}
+                            <div class="mobile-login">
+                                <a href="{% url 'anilist:login' %}" class="log font-bold text-lg text-white">Login</a>
+                            </div>
+                        {% endif %}
                     </li>
-                </ul>
+                    </ul>
             </div>
+            
+            
 
             <!-- Pesquisa e login à direita -->
-            <div class="flex items-center gap-4">
-                <form action="{% url 'anilist:pesquisa'%}" method="GET" class="flex items-center">
-                    <input class="font-bold text-md text-white bg-transparent outline-none border-b-2 border-white" type="search" name="q" autocomplete="off" placeholder="Pesquisar">
+            <div class="flex items-center gap-6">
+                <form action="{% url 'anilist:pesquisa'%}" method="GET" class="search-box flex">
+                    <input class=" font-bold text-md text-white outline-none focus:border-b-2 focus:border-white " type="search" name="q" autocomplete="off" placeholder="Pesquisar">
                 </form>
 
                 {% if user.is_authenticated %}
-                    <div class="relative">
-                        <button id="profile-button" class="flex items-center focus:outline-none border-solid" onclick="clickmenu()">
+                    <div class="account-user relative">
+                        <button id="profile-button" class="flex items-center focus:outline-none  border-solid" onclick="clickmenu()">
                             <img src="{% static 'img/usuario1.png' %}" alt="Profile" class="w-10 h-10 rounded-full">
                         </button>
                         <div id="menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-10">
@@ -61,7 +95,7 @@
                         </div>
                     </div>
                 {% else %}
-                    <a href="{% url 'anilist:login' %}" class="log font-bold text-lg text-white">Login</a>
+                    <a href="{% url 'anilist:login' %}" class="log-user font-bold text-lg text-white">Login</a>
                 {% endif %}
             </div>  
         </nav>
@@ -85,3 +119,5 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </body>
 </html>
+
+
