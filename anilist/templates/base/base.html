@@ -7,15 +7,29 @@
     {% load static %}
     <!-- google font -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0&icon_names=menu" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0&icon_names=menu,chevron_right" />
     <!-- Estilos internos -->
     <link href="{% static 'dist/styles.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/serie.css' %}">
+    <link rel="stylesheet" href="{% static 'css/filme.css' %}">
     
 </head>
 
 <body class="">
     <header class="">
+        
+        <!------------- Mobile: Área de pesquisa ------------>
+        <button id="mobile-search-icon" class="mobile-search-icon" onclick="ToggleSearch(event)">
+            <img src="{% static 'img/search.svg' %}" class="" alt="">
+        </button>
+
+        <div id="content-search-mobile" class="content-search-mobile">
+            <form action="{% url 'anilist:pesquisa'%}" method="GET" class="search-box-mobile">
+                <input class="" type="search" name="q" autocomplete="off" placeholder="Pesquisar">
+            </form>
+        </div>
+
         <nav class="navbar" role="navigation" aria-label="Main Navigation">
             
             <!-- Título à esquerda -->
@@ -23,7 +37,7 @@
                 <a href="{% url 'anilist:home' %}">MyMovie</a>
             </div>
             
-            <!-- Menu hamburguer para mobile -->
+            <!-------------------- Menu hamburguer para mobile ------------------->
             <div class="hamburger-menu">
                 <div class="hamburger-icon" onclick=" toggleMenu()">
                     <span></span>
@@ -32,10 +46,12 @@
                 </div>
             </div>
 
-            <!-- Rotas no centro -->
-            <div class="content-links">
-                <ul class="nav-links flex gap-6">
 
+
+            <!--------------- Rotas no centro -------------->
+            <div class="content-links">
+
+                <ul class="nav-links flex gap-6">
                     <li class="flex justify-center items-center w-20 h-10 rounded-lg text-lg">
                         <a href="{% url 'anilist:home' %}" class="rotas text-white">Inicio</a></li>
                     <li class="flex justify-center items-center w-20 h-10 rounded-lg text-lg">
@@ -45,7 +61,7 @@
                     <li class="flex text-white justify-center items-center  w-20 h-10 rounded-lg text-lg">
                         <a href="{% url 'anilist:series' %}" class="rotas">Séries</a></li>
 
-                    <!-- Mobile: Área de pesquisa e usuário (será movida para o menu mobile) -->
+            <!------------------ MOBILE: USER NO MENU --------------->
                     <li class="mobile-user">
                         
                         {% if user.is_authenticated %}

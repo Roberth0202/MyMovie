@@ -1,19 +1,22 @@
 {% extends 'base/base.html' %}
+{% load static %}
 
 {% block content %} 
-<main class="relative flex flex-col w-full justify-center items-center top-16 py-8 space-y-24">
-    <!-- Seção de Filmes -->
-    <section class="relative flex w-full h-96 justify-center">
+<main id="container" class=" relative flex flex-col w-full justify-center items-center">
+    
+    <!------------- Seção de Filmes -------------->
+
+    <section class="container-list relative flex w-full h-96  justify-center">
         <div class="Tranding absolute flex left-16 z-10 top-1">
             <h1 class="relative text-white text-xl font-bold">Filmes em alta</h1>
         </div>
 
         <div class="seta-rolagem flex h-10 top-40 text-white text-xl font-bold left-4">
-            <button class="flex" id="btn-esquerda">Ant</button>
+            <button class="flex" id="btn-esquerda"><img src="{% static 'img/arrow_back.svg' %}" alt=""></button>
         </div>
 
         <div class="seta-rolagem absolute flex h-10 top-40 text-white text-xl font-bold right-2"> 
-            <button class="flex" id="btn-direita">Pró</button>
+            <button class="flex" id="btn-direita" ><img src="{% static 'img/arrow_right.svg' %}" alt=""></button>
         </div>
 
         <div class="absolute flex h-96 overflow-x-hidden w-11/12 top-10" id="lista">
@@ -32,18 +35,19 @@
         </div>
     </section>
 
-    <!-- Seção de Séries -->
-    <section class="relative flex w-full h-96 justify-center">
+    <!-------------- Seção de Séries --------------->
+
+    <section class="container-list relative flex w-full h-96 justify-center">
         <div class="Tranding absolute flex left-16 z-10 top-1">
             <h1 class="relative text-white text-xl font-bold">Séries em alta</h1>
         </div>
 
         <div class="seta-rolagem absolute flex h-10 top-40 text-white text-xl font-bold left-4">
-            <button class="flex" id="btn-esquerda2">Ant</button>
+            <button class="flex" id="btn-esquerda2"><img src="{% static 'img/arrow_back.svg' %}" alt=""></button>
         </div>
 
         <div class="seta-rolagem absolute flex h-10 top-40 text-white text-xl font-bold right-2"> 
-            <button class="flex" id="btn-direita2">Pró</button>
+            <button class="flex" id="btn-direita2"><img src="{% static 'img/arrow_right.svg' %}" alt=""></button>
         </div>
 
         <div class="absolute flex h-96 overflow-x-hidden w-11/12 top-10" id="lista2">

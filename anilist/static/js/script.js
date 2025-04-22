@@ -1,4 +1,4 @@
-// movimenta os Filmes pra esqueda ou direita
+//----------------------------------- SLIDE DA FILME ESQUERDA E DIREITA -------------------------------------
 document.addEventListener('DOMContentLoaded', function() {
 const btnEsquerda = document.getElementById('btn-esquerda');
 const btnDireita = document.getElementById('btn-direita');
@@ -19,7 +19,7 @@ btnDireita.addEventListener('click', function() {
 });
 });
 
-//movimenta as Séries pra esqueda ou direita
+//-------------------------------------- SLIDE DA SÉRIE ESQUERDA E DIREITA ------------------------------------------
 document.addEventListener('DOMContentLoaded', function() {
 const btnEsquerda2 = document.getElementById('btn-esquerda2');
 const btnDireita2 = document.getElementById('btn-direita2');
@@ -40,7 +40,7 @@ btnDireita2.addEventListener('click', function() {
 });
 });
 
-//fazer o menu funcionar
+//------------------------------------- FAZ O MENU FUNCIONAR -------------------------------------
 function toggleMenu() {
     const hamburger = document.querySelector('.hamburger-icon');
     const navLinks = document.querySelector('.nav-links');
@@ -52,7 +52,7 @@ function toggleMenu() {
     document.body.classList.toggle('menu-open');
 }
 
-  // Fechar o menu ao clicar em um link
+//----------------- FECHA O MENU QUANDO APERTA EM UM LINK --------------------
 document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', () => {
     const hamburger = document.querySelector('.hamburger-icon');
@@ -64,7 +64,7 @@ document.querySelectorAll('.nav-links a').forEach(link => {
     });
 });
 
-// Fechar o menu quando clicar fora dele
+//------------------ FECHA O MENU AO CLICAR FORA -------------------
 document.addEventListener('click', (event) => {
     const hamburger = document.querySelector('.hamburger-icon');
     const navLinks = document.querySelector('.nav-links');
@@ -80,7 +80,54 @@ document.addEventListener('click', (event) => {
     }
 });
 
-//pesquisa
+
+
+//------------------------------------- SISTEMA DE PESQUISA PRA MOBILE -------------------------------------
+// Adicione esta função ao seu JavaScript
+function setupOutsideClickHandler() {
+    document.addEventListener('click', function(event) {
+        const searchContainer = document.getElementById('content-search-mobile');
+        const searchIcon = document.getElementById('mobile-search-icon');
+        
+        // Verifica se o elemento de pesquisa está visível
+        if (searchContainer.classList.contains('active')) {
+            // Verifica se o clique foi fora do container de pesquisa E fora do ícone de pesquisa
+            if (!searchContainer.contains(event.target) && !searchIcon.contains(event.target)) {
+                // Esconde o container de pesquisa
+                searchContainer.classList.remove('active');
+            }
+        }
+    });
+}
+
+// Modifique sua função toggleSearch
+function ToggleSearch(event) {
+    // Impede que o evento de clique se propague para o documento
+    event.stopPropagation();
+    
+    const searchContainer = document.getElementById('content-search-mobile');
+    searchContainer.classList.toggle('active');
+    
+    if (searchContainer.classList.contains('active')) {
+        setTimeout(() => {
+            searchContainer.querySelector('input').focus();
+        }, 300);
+    }
+}
+
+// Inicialize o handler quando a página carregar
+document.addEventListener('DOMContentLoaded', function() {
+    setupOutsideClickHandler();
+    
+    // Impede que cliques dentro da área de pesquisa fechem ela
+    const searchContainer = document.getElementById('content-search-mobile');
+    searchContainer.addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
+});
+
+
+//----------------------------------------------- PESQUISA --------------------------------------------------
 document.addEventListener('DOMContentLoaded', function() {
     let input = document.querySelector('input[name="q"]');
     let results = document.getElementById('search-results');
@@ -101,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-//Evita o reenvio do formulário
+//------------------------------------- EVITA O REENVIO DO FORMULARIO ----------------------------------
 const form = document.getElementById('form');
 form.addEventListener('submit', function(event) {
     //salva os dados do formulario em uma variavel local ou processa como necessário
@@ -114,7 +161,7 @@ if (sessionStorage.getItem('formSubmitted')){
     window.location.href = window.location.href; //redireciona para a mesma página
 }
 
-//Aguarde o Dom carregar
+//--------------------------------- NOTIFICAÇÃO ---------------------------
 document.addEventListener('DOMContentLoaded', function() {
     // Seleciona todas as mensagens com ID 'notification'
     const notifications = document.querySelectorAll('#notification');
