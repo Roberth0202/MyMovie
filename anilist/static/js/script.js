@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 //------------------------------------- EVITA O REENVIO DO FORMULARIO ----------------------------------
-const form = document.getElementById('form');
+const form = document.getElementById('favorito-form');
 form.addEventListener('submit', function(event) {
     //salva os dados do formulario em uma variavel local ou processa como necessário
     sessionStorage.setItem('formSubmitted', 'true');
@@ -160,6 +160,47 @@ if (sessionStorage.getItem('formSubmitted')){
     sessionStorage.removeItem('formSubmitted');
     window.location.href = window.location.href; //redireciona para a mesma página
 }
+
+//------------------------------- SISTEMA AJAX PRA IMPERDIR O REINICIO DA PAGINA AO ADICIONAR AOS FAVORITOS ----------------------------------
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('favorito-form');
+    const button = document.getElementById('favorito-btn');
+    const img = document.getElementById('coracao-img');
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault(); // impedir recarregamento
+
+        const mediaId = document.querySelector('[name="media_id"]').value;
+        const midiaType = document.querySelector('[name="midia_type"]').value;
+        const action = button.getAttribute('value'); // pega o value do botão
+
+        fetch("", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "X-CSRFToken": document.querySelector('[name=csrfmiddlewaretoken]').value,
+            },
+            body: new URLSearchParams({
+                media_id: mediaId,
+                midia_type: midiaType,
+                action: action,
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "added") {
+                button.setAttribute('value', 'remove'); // MUDA O VALUE
+                button.setAttribute('name', 'action');  // mantém o name correto
+                img.src = "/static/img/coração_preenchido.svg";
+            } else if (data.status === "removed") {
+                button.setAttribute('value', 'add'); // MUDA O VALUE
+                button.setAttribute('name', 'action');
+                img.src = "/static/img/coração_vazio.svg";
+            }
+        })
+        .catch(error => console.error("Erro no AJAX:", error));
+    });
+});
 
 //--------------------------------- NOTIFICAÇÃO ---------------------------
 document.addEventListener('DOMContentLoaded', function() {

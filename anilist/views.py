@@ -11,12 +11,23 @@ from .movie_functions import *
 from django.core.exceptions import ValidationError
 from .utils import adicionar_midia, remover_midia
 from .models import Lista
+from django.http import JsonResponse
 
-# Função para verificar se a mídia já está na lista
+#------------------ Função para verificar se a mídia já está na lista   ------------------
 def verificar_midia_na_lista(user_id, media_id, midia_type):
+    """Verifica se uma mídia já está na lista do usuário.
+
+    Args:
+        user_id (int): O ID do usuário.
+        media_id (int): O ID da mídia.
+        midia_type (str): O tipo da mídia (por exemplo, 'filme', 'série').
+
+    Returns:
+        bool: Retorna True se a mídia já estiver na lista, False caso contrário.
+    """
     return Lista.objects.filter(user_id=user_id, media_id=media_id, midia_type=midia_type).exists()
 
-#Adiciona filme/serie na lista
+#-------------------------- Adiciona filme/serie na lista do usuario --------------------------
 @login_required(login_url = '/page/login/')
 def add_to_list(request, media_id, midia_type):
     """Adiciona uma mídia à lista do usuário.
@@ -33,10 +44,11 @@ def add_to_list(request, media_id, midia_type):
     """
     try:
         adicionar_midia(request.user, media_id, midia_type)
-        messages.success(request, 'Foi adicionado à sua lista!', extra_tags='sucesso')
+        
     except Exception:
         messages.error(request, f'Mídia ja está na sua lista.', extra_tags='erro')
 
+#-------------------------- Remove filme/serie da lista do usuario --------------------------
 @login_required(login_url = '/page/login/')
 def remove_from_list(request, media_id, midia_type):
     """Remove uma mídia da lista do usuário.
@@ -64,7 +76,7 @@ def remove_from_list(request, media_id, midia_type):
     except Exception:
         messages.error(request, 'Erro ao remover mídia da lista.', extra_tags='erro')
 
-#Tela home
+# ----------------------- filmes e séries em alta --------------------------
 def home(request):
     popular_movie = filme_populares
     popular_serie = serie_populares
@@ -76,7 +88,7 @@ def home(request):
     }
     return render(request, 'html/home.html', context)
 
-#Pesquisa
+#--------------------------- Função de pesquisa --------------------------
 def pesquisa(request):
     query = request.GET.get('q')
     searches = search_movies(query)
@@ -85,7 +97,7 @@ def pesquisa(request):
     }
     return render(request, 'html/search.html', context)
 
-# Detalhes do filme
+#--------------------------- Detalhes do filme --------------------------
 def detail_movie(request, movie_id):
     if request.method == "POST":
         media_id = request.POST.get('media_id')
@@ -94,16 +106,27 @@ def detail_movie(request, movie_id):
         
         if action == 'add':
             add_to_list(request, media_id, midia_type)
+            return JsonResponse({'status': 'added'})
         elif action == 'remove':
             remove_from_list(request, media_id, midia_type)
+            return JsonResponse({'status': 'removed'})
+        
+        # Muito importante: colocar return aqui também
+        return JsonResponse({'status': 'error'})
 
     filme = info_movie(movie_id)
+    esta_na_lista = verificar_midia_na_lista(
+        request.user,
+        movie_id,
+        'movie')
+    
     context = {
         'filme': filme,
+        'esta_na_lista': esta_na_lista,  # Adiciona a variável ao contexto
     }
     return render(request, 'html/infomovie.html', context)
 
-# Detalhes da série
+#--------------------------- Detalhes da série --------------------------
 def detail_serie(request, series_id):
     if request.method == "POST":
         media_id = request.POST.get('media_id')
@@ -116,12 +139,17 @@ def detail_serie(request, series_id):
             remove_from_list(request, media_id, midia_type)
 
     serie = info_serie(series_id)
+    esta_na_lista = verificar_midia_na_lista(
+        request.user,
+        series_id,
+        'movie')
+    
     context = {
         'serie': serie,
     }
     return render(request, 'html/infoserie.html', context)
 
-#Lista de filmes/series do usuario
+#----------------------- Lista de filmes/series do usuario -----------------------
 @login_required(login_url='/page/login/')
 def lista(request):
     object_list = Lista.objects.filter(user_id=request.user)
@@ -143,6 +171,7 @@ def lista(request):
     }
     return render(request, "html/lista.html", context)
 
+#----------------------- Funções de paginação para filmes -----------------------
 def filmes(request):
     page = request.GET.get("page", 1)
     
@@ -172,7 +201,7 @@ def filmes(request):
     }
     return render(request, 'html/filmes.html', context)
 
-
+#----------------------- Funções de paginação para séries -----------------------
 def series(request):
     page = request.GET.get("page", 1)
     
@@ -202,7 +231,7 @@ def series(request):
     }
     return render(request, 'html/series.html', context)
     
-#tela de login
+#----------------------- Tela de login -----------------------
 def login(request):
     if request.method == "POST":
         username = request.POST["username"]
@@ -216,12 +245,12 @@ def login(request):
             return render(request, 'html/login.html')
     return render(request, 'html/login.html')
 
-#logout
+#----------------------- Tela de logout -----------------------
 def logout_view(request):
     logout(request)
     return redirect('/page/home')
 
-#tela de cadastro
+#----------------------- Tela de cadastro -----------------------
 def register(request):
     if request.method == "POST":
         username = request.POST.get("name")
