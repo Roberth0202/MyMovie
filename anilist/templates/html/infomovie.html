@@ -4,13 +4,13 @@
 {% block content %}
 
 {% if filme %}
-<!--da informação dos filme poster, nome, genero, descrição do filme-->>
-<main class="relative justify-items-center items-center ">
-    <div class="relative flex w-screen h-screen ">
+<!--da informação dos filme poster, nome, genero, descrição do filme-->
+<main class="info-movie relative flex justify-items-center items-center ">
+    <div class="content-info relative flex w-screen ">
 
         <!----------- POSTER DO FILME ------------>
         <div class="absolute left-20 top-20">
-            <img src="{{filme.poster}}" class="flex w-72 h-96 rounded-xl" alt="">
+            <img src="{{filme.poster}}" class=" flex w-72 h-96 rounded-xl" alt="">
         </div>
 
         <!-------------- NOME DO FILME ------------->
@@ -19,27 +19,32 @@
         </div>
 
         <!---------------- GENERO DO FILME ---------------->
-        <div class="absolute flex gap-3 top-32 left-96">
+        <div class="gen-movie absolute flex gap-3 top-32 left-96">
+
             {% for genre in filme.genre %}
             <div class="flex bg-gray-800 rounded-xl px-3">
                 <p class="text-white ">{{ genre }}</p>
             </div>
             {% endfor %}
+
         </div >
 
         <!----------- DESCRIÇÃO DO FILME -------------->
-        <div class="absolute flex w-2/3 top-44 left-96">
-            <p class="text-white text-lg ">{{filme.description}}</p>
-        <div>
-
+        <div class="desc-movie absolute flex w-2/3 top-44 left-96">
+            <p class="text-white text-lg ">{{ filme.description }}</p>
         </div>
-    </div>
-    
-    <!------------- Ser tiver logado adiciona ou remove ---------------->
-    {% if user.is_authenticated %}
+
+        <!----------------- AVALIAÇÃO --------------------->
+        <div class="content-avaliacao-movie  flex">
+            <span class="avaliacao">{{  filme.rating  }}</span>
+            <span class="avaliacao-max">/10</span>
+        </div>
+
+        <!------------- Ser tiver logado adiciona ou remove ---------------->
+        {% if user.is_authenticated %}
 
         <!--------Adicionar e remover da lista------->
-        <form class="absolute z-auto left-96 top-80 flex justify-between space-x-4" id="favorito-form" method="POST">
+        <form class="favorite z-auto flex h-10" id="favorito-form" method="POST">
             {% csrf_token %}
 
                 <input type="hidden" name="media_id" value="{{filme.id}}">
@@ -58,14 +63,17 @@
                 {% endif %}
         </form>
         
-    <!--------------Se não. vai pra pagina de login----------------->
-    {% else %}
-    <div class="absolute z-auto left-96 top-80 flex justify-between gap-4"></button></a>
-        <a href="{% url 'anilist:login' %}"><button class="z-10 text-white font-bold" type="submit" name="" value="remove">remove</button></a>
-    </div>
-    {% endif %}
-    
+        <!--------------Se não. vai pra pagina de login----------------->
+        {% else %}
+        <div class="favorito-deslogado flex">
+                <a href="{% url 'anilist:login' %}" class="direct-login ">
+                        <img id="coracao-img" src="{% static 'img/coração_vazio.svg' %}" alt="">
+                </a>
+            </button>
+        </div>
+        {% endif %}
 
+    </div>
 </main>
 
 {% endif %}

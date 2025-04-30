@@ -115,11 +115,15 @@ def detail_movie(request, movie_id):
         return JsonResponse({'status': 'error'})
 
     filme = info_movie(movie_id)
-    esta_na_lista = verificar_midia_na_lista(
-        request.user,
-        movie_id,
-        'movie')
-    
+    # Verifica se o usuário está autenticado antes de chamar a função
+    if request.user.is_authenticated:
+        esta_na_lista = verificar_midia_na_lista(
+            request.user,
+            movie_id,
+            'movie')
+    else:
+        esta_na_lista= False  # Se o usuário não estiver autenticado, defina como False
+        
     context = {
         'filme': filme,
         'esta_na_lista': esta_na_lista,  # Adiciona a variável ao contexto
@@ -135,17 +139,23 @@ def detail_serie(request, series_id):
         
         if action == 'add':
             add_to_list(request, media_id, midia_type)
+            return JsonResponse({'status': 'added'})
         elif action == 'remove':
             remove_from_list(request, media_id, midia_type)
+            return JsonResponse({'status': 'removed'})
+        
+        # Muito importante: colocar return aqui também
+        return JsonResponse({'status': 'error'})
 
     serie = info_serie(series_id)
     esta_na_lista = verificar_midia_na_lista(
         request.user,
         series_id,
-        'movie')
+        'tv')
     
     context = {
         'serie': serie,
+        'esta_na_lista': esta_na_lista,  # Adiciona a variável ao contexto
     }
     return render(request, 'html/infoserie.html', context)
 

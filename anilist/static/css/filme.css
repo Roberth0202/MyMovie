@@ -1,3 +1,61 @@
+.info-movie{
+    position: relative;
+    height:79vh;
+}
+
+.content-info{
+    height: 100%;
+}
+
+.gen-movie{
+    height: 1.5rem;
+}
+
+.content-avaliacao-movie{
+    position: relative;
+    height: 30px;
+    gap: 0.5rem;
+    top: 29.5rem;
+    left: 10rem;
+}
+
+.avaliacao{
+    color: white;
+    position: relative;
+    font-size:x-large;
+    font-weight: 700;
+}
+
+.avaliacao-max{
+    position: relative;
+    color:dimgrey;
+    font-size: large;
+    font-weight: 700;
+}
+
+.favorite{
+    position: relative;
+    top: 79%;
+    left: 11rem;
+}
+
+.favorito-deslogado{
+    position: relative;
+    top: 29.5rem;
+    height: 40px;
+    left: 11rem;
+    cursor: pointer;
+}
+.direct-login{
+    height: 40px;
+    z-index: 100;
+    cursor: pointer;
+}
+
+.movie{
+    background-color: burlywood;
+}
+
 #favorito-btn{
     cursor: pointer;
 }

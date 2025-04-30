@@ -1,4 +1,5 @@
 {% extends 'base/base.html' %}
+{% load static %}
 
 {% block content %}
 
@@ -44,20 +45,34 @@
         </div>
     {% endif %}
 
-    <!--Ser tiver logado adiciona ou remove-->
+
+
+    <!------------- Ser tiver logado adiciona ou remove ---------------->
     {% if user.is_authenticated %}
-        <!--Adicionar e remover da lista-->
-        <form class="absolute z-auto left-96 top-80 flex justify-between space-x-4" id="form" method="POST">
-            {% csrf_token %}
-                <input type="hidden" name="media_id" value="{{serie.id}}">
-                <input type="hidden" name="midia_type" value="tv">
-                <button class="z-10 text-white font-bold" type="submit" name="action" value="add">add</button>
-                <button class="z-10 text-white font-bold" type="submit" name="action" value="remove">remove</button>
-        </form>
-    <!--Se não. vai pra pagina de login-->
+
+    <!--------Adicionar e remover da lista------->
+    <form class="relative z-auto left-96 top-16 flex justify-between space-x-4" id="favorito-form" method="POST">
+        {% csrf_token %}
+
+            <input type="hidden" name="media_id" value="{{serie.id}}">
+            <input type="hidden" name="midia_type" value="tv">
+            {% if esta_na_lista%}    
+
+                <button id="favorito-btn" class="z-10 text-white font-bold" type="submit" name="action" value="remove">
+                    <img id="coracao-img" src="{% static 'img/coração_preenchido.svg' %}" alt="">
+                </button>
+
+            {% else %}
+                <button id="favorito-btn" class="z-10 text-white font-bold" type="submit" name="action" value="add">
+                    <img id="coracao-img" src="{% static 'img/coração_vazio.svg' %}" alt="">
+                </button>
+
+            {% endif %}
+    </form>
+        
+    <!--------------Se não. vai pra pagina de login----------------->
     {% else %}
-    <div class="absolute z-auto left-96 top-80 flex justify-between gap-4">
-        <a href="{% url 'anilist:login' %}"><button class="z-10 text-white font-bold" type="submit" name="" value="add">add</button></a>
+    <div class="absolute z-auto left-96 top-80 flex justify-between gap-4"></button></a>
         <a href="{% url 'anilist:login' %}"><button class="z-10 text-white font-bold" type="submit" name="" value="remove">remove</button></a>
     </div>
     {% endif %}
