@@ -5,77 +5,74 @@
 
 {% if filme %}
 <!--da informação dos filme poster, nome, genero, descrição do filme-->
-<main class="info-movie relative flex justify-items-center items-center ">
-    <div class="content-info relative flex w-screen ">
+<main class="info-movie w-screen">
+    <div class="container flex ">
 
-        <!----------- POSTER DO FILME ------------>
-        <div class="absolute left-20 top-20">
-            <img src="{{filme.poster}}" class=" flex w-72 h-96 rounded-xl" alt="">
-        </div>
+        <!----------- POSTER DO FILME(poster, name, avaliação, salvar) ------------>
+        <div class="poster ">
+            <img src="{{filme.poster}}" class="" alt="">
 
-        <!-------------- NOME DO FILME ------------->
-        <div class="absolute flex w-auto left-96 top-20">
-            <h1 class="text-3xl text-white font-bold">{{filme.name}}</h1>
-        </div>
+            <!-------------- NOME DO FILME ------------->
+            <h2 class=" text-white size-4 font-bold">{{filme.name}}</h2>
 
-        <!---------------- GENERO DO FILME ---------------->
-        <div class="gen-movie absolute flex gap-3 top-32 left-96">
-
-            {% for genre in filme.genre %}
-            <div class="flex bg-gray-800 rounded-xl px-3">
-                <p class="text-white ">{{ genre }}</p>
+            <!----------------- AVALIAÇÃO --------------------->
+            <div class="container-avaliacao">
+                <span class="avaliacao">{{  filme.rating  }}</span>
+                <span class="avaliacao-max">/10</span>
             </div>
-            {% endfor %}
 
-        </div >
+            <!------------- Ser tiver logado adiciona ou remove ---------------->
+            {% if user.is_authenticated %}
 
-        <!----------- DESCRIÇÃO DO FILME -------------->
-        <div class="desc-movie absolute flex w-2/3 top-44 left-96">
-            <p class="text-white text-lg ">{{ filme.description }}</p>
+            <!--------Adicionar e remover da lista------->
+            <form class="favorite" id="favorito-form" method="POST">
+                {% csrf_token %}
+
+                    <input type="hidden" name="media_id" value="{{filme.id}}">
+                    <input type="hidden" name="midia_type" value="movie">
+                    {% if esta_na_lista%}    
+
+                        <button id="favorito-btn" class="z-10 text-white font-bold" type="submit" name="action" value="remove">
+                            <img id="coracao-img" src="{% static 'img/coração_preenchido.svg' %}" alt="">
+                        </button>
+
+                    {% else %}
+                        <button id="favorito-btn" class="z-10 text-white font-bold" type="submit" name="action" value="add">
+                            <img id="coracao-img" src="{% static 'img/coração_vazio.svg' %}" alt="">
+                        </button>
+
+                    {% endif %}
+            </form>
+            
+            <!--------------Se não. vai pra pagina de login----------------->
+            {% else %}
+            <div class="favorito-deslogado flex">
+                    <a href="{% url 'anilist:login' %}" class="direct-login ">
+                            <img id="coracao-img" src="{% static 'img/coração_vazio.svg' %}" alt="">
+                    </a>
+                </button>
+            </div>
+            {% endif %}
         </div>
 
-        <!----------------- AVALIAÇÃO --------------------->
-        <div class="content-avaliacao-movie  flex">
-            <span class="avaliacao">{{  filme.rating  }}</span>
-            <span class="avaliacao-max">/10</span>
+        <!----------- INFO DO FILME(genenro, descrição, trailer(talvez)) ------------>
+        <div class="info-container">
+
+            <!---------------- GENERO DO FILME ---------------->
+            <div class="tags">
+                {% for genre in filme.genre %}
+                    <span class="tag text-white ">{{ genre }}</span>
+                {% endfor %}
+            </div >
+
+            <!--------------- DESCRIÇÃO DO FILME ---------------->
+            <div class="description">
+                <h2 class="text-white text-lg ">{{ filme.description }}</h2>
+            </div>
+
         </div>
-
-        <!------------- Ser tiver logado adiciona ou remove ---------------->
-        {% if user.is_authenticated %}
-
-        <!--------Adicionar e remover da lista------->
-        <form class="favorite z-auto flex h-10" id="favorito-form" method="POST">
-            {% csrf_token %}
-
-                <input type="hidden" name="media_id" value="{{filme.id}}">
-                <input type="hidden" name="midia_type" value="movie">
-                {% if esta_na_lista%}    
-
-                    <button id="favorito-btn" class="z-10 text-white font-bold" type="submit" name="action" value="remove">
-                        <img id="coracao-img" src="{% static 'img/coração_preenchido.svg' %}" alt="">
-                    </button>
-
-                {% else %}
-                    <button id="favorito-btn" class="z-10 text-white font-bold" type="submit" name="action" value="add">
-                        <img id="coracao-img" src="{% static 'img/coração_vazio.svg' %}" alt="">
-                    </button>
-
-                {% endif %}
-        </form>
-        
-        <!--------------Se não. vai pra pagina de login----------------->
-        {% else %}
-        <div class="favorito-deslogado flex">
-                <a href="{% url 'anilist:login' %}" class="direct-login ">
-                        <img id="coracao-img" src="{% static 'img/coração_vazio.svg' %}" alt="">
-                </a>
-            </button>
-        </div>
-        {% endif %}
-
     </div>
 </main>
 
 {% endif %}
-
 {% endblock %}

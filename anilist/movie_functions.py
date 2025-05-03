@@ -136,6 +136,7 @@ def info_serie(series_id):
             'id': dados['id'],
             'genre' : generos,
             'description' : dados['overview'],
+            'rating' : (f'{dados['vote_average']:.1f}'),
             'type' : 'tv',
         }
         return serie_detail

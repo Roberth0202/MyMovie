@@ -1,0 +1,96 @@
+.info-movie{
+    position: relative;
+}
+
+/*------------------------------- Tem todas as divs ----------------------------------*/
+.container{
+    width: 100%;;
+}
+
+/*---------------------------- CONTAINER POSTER(poster, name, avaliação, salvar) ------------------------------- */
+.poster{
+    width: 16rem;
+    height: auto;
+    margin-top: 60px;
+    margin-left: 50px;
+    text-align: center;
+    justify-content: center;
+}
+
+/*------------ POSTER DO FILME ----------*/
+.poster img {
+    width: 100%;
+}
+
+/*------------------- Avaliação ------------------*/
+.container-avaliacao{
+    position: relative;
+    height: 30px;
+    gap: 0.2rem;
+
+}
+
+.avaliacao{
+    color: white;
+    font-size:1.3rem;
+    font-weight: 700;
+}
+
+.avaliacao-max{
+
+    color:dimgrey;
+    font-size: large;
+    font-weight: 700;
+}
+
+/*-------------------- Botão adicionar/remover da lista -------------------*/
+.favorite{
+    position: relative;
+}
+
+.favorito-deslogado{
+    position: relative;
+    top: 29.5rem;
+    height: 40px;
+    cursor: pointer;
+}
+
+/*-------------------- Falso botão de adicionar, que redirecionar pra tela de login -------------------*/
+.direct-login{
+    height: 40px;
+    z-index: 100;
+    cursor: pointer;
+}
+
+#favorito-btn{
+    cursor: pointer;
+}
+
+/*------------------------------------------ CONTAINER INFORMAÇÕES DO FILME --------------------------------------*/
+.info-container{
+    width: 70%;
+    height: auto;
+    margin-top: 60px;
+    margin-left: 40px;
+    flex-direction: column;
+
+}
+/*-------------------- Generos do filme -------------------*/
+.tag{
+    display: inline-block;
+    border: 0.2px solid #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+/*-------------------- Descrição do filme -------------------*/
+.description{
+    margin-top: 15px;
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+
+
