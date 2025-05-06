@@ -1,0 +1,16 @@
+.container-movies{
+    margin-top: 30px;
+}
+
+.container-movies ul{
+    gap: 1px 15px;
+}
+
+.discovers{
+    display: flex;
+    flex-direction: column;
+    width: 12rem;
+    align-items: center;
+    height: auto;
+    margin-top: 30px;
+}
