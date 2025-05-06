@@ -146,12 +146,15 @@ def detail_serie(request, series_id):
         
         # Muito importante: colocar return aqui também
         return JsonResponse({'status': 'error'})
-
+    
     serie = info_serie(series_id)
-    esta_na_lista = verificar_midia_na_lista(
-        request.user,
-        series_id,
-        'tv')
+    if request.user.is_authenticated:
+        esta_na_lista = verificar_midia_na_lista(
+            request.user,
+            series_id,
+            'tv')
+    else:
+        esta_na_lista = False
     
     context = {
         'serie': serie,
