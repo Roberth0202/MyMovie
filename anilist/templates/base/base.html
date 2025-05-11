@@ -25,7 +25,7 @@
         </button>
 
         <div id="content-search-mobile" class="content-search-mobile">
-            <form action="{% url 'anilist:pesquisa'%}" method="GET" class="search-box-mobile">
+            <form action="{% url 'pesquisa'%}" method="GET" class="search-box-mobile">
                 <input class="" type="search" name="q" autocomplete="off" placeholder="Pesquisar">
             </form>
         </div>
@@ -34,7 +34,7 @@
             
             <!-- Título à esquerda -->
             <div class="logo text-white text-4xl">
-                <a href="{% url 'anilist:home' %}">MyMovie</a>
+                <a href="{% url 'home' %}">MyMovie</a>
             </div>
             
             <!-------------------- Menu hamburguer para mobile ------------------->
@@ -51,13 +51,13 @@
 
                 <ul class="nav-links flex gap-6">
                     <li class="flex justify-center items-center w-20 h-10 rounded-lg text-lg">
-                        <a href="{% url 'anilist:home' %}" class="rotas text-white">Inicio</a></li>
+                        <a href="{% url 'home' %}" class="rotas text-white">Inicio</a></li>
                     <li class="flex justify-center items-center w-20 h-10 rounded-lg text-lg">
-                        <a href="{% url 'anilist:lista' %}" class="rotas text-white">Lista</a></li>
+                        <a href="{% url 'lista' %}" class="rotas text-white">Lista</a></li>
                     <li class="flex justify-center items-center w-20 h-10 rounded-lg text-lg">
-                        <a href="{% url 'anilist:filmes' %}" class="rotas text-white">Filmes</a></li>
+                        <a href="{% url 'filmes' %}" class="rotas text-white">Filmes</a></li>
                     <li class="flex text-white justify-center items-center  w-20 h-10 rounded-lg text-lg">
-                        <a href="{% url 'anilist:series' %}" class="rotas">Séries</a></li>
+                        <a href="{% url 'series' %}" class="rotas">Séries</a></li>
 
             <!------------------ MOBILE: USER NO MENU --------------->
                     <li class="mobile-user">
@@ -69,7 +69,7 @@
                                 <ul class="mobile-user-menu">
                                     <li><a href="#" class="block py-2 text-white hover:text-gray-300">Configuração</a></li>
                                     <li>
-                                        <form action="{% url 'anilist:logout' %}" method="POST" class="block py-2 text-white hover:text-gray-300">
+                                        <form action="{% url 'logout' %}" method="POST" class="block py-2 text-white hover:text-gray-300">
                                         {% csrf_token %}
                                         <button type="submit" class="w-full text-left text-white">Sair</button>
                                         </form>
@@ -78,7 +78,7 @@
                             </div>
                         {% else %}
                             <div class="mobile-login">
-                                <a href="{% url 'anilist:login' %}" class="log font-bold text-lg text-white">Login</a>
+                                <a href="{% url 'login' %}" class="log font-bold text-lg text-white">Login</a>
                             </div>
                         {% endif %}
                     </li>
@@ -87,7 +87,7 @@
 
             <!-- Pesquisa e login à direita -->
             <div class="flex items-center gap-6">
-                <form action="{% url 'anilist:pesquisa'%}" method="GET" class="search-box flex">
+                <form action="{% url 'pesquisa'%}" method="GET" class="search-box flex">
                     <input class=" font-bold text-md text-white outline-none focus:border-b-2 focus:border-white " type="search" name="q" autocomplete="off" placeholder="Pesquisar">
                 </form>
 
@@ -99,7 +99,7 @@
                         <div id="menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-10">
                             <ul>
                                 <li><a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Configuração</a></li>
-                                <li><form action="{% url 'anilist:logout' %}" method="POST" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                                <li><form action="{% url 'logout' %}" method="POST" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">
                                 {% csrf_token %}
                                 <button type="submit" class="w-full text-left">Sair</button>
                                 </form></li>
@@ -107,7 +107,7 @@
                         </div>
                     </div>
                 {% else %}
-                    <a href="{% url 'anilist:login' %}" class="log-user font-bold text-lg text-white">Login</a>
+                    <a href="{% url 'login' %}" class="log-user font-bold text-lg text-white">Login</a>
                 {% endif %}
             </div>  
         </nav>

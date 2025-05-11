@@ -183,7 +183,7 @@ def search_movies(query):
 
 #mostra uma lista de filme
 def Filmes(page):
-    url = f'{base_url}/discover/movie'
+    url = f'{base_url}/movie/popular?language=pt-BR&page=1'
     
     max_pages = 500  # Limite manual de páginas
     page = min(page, max_pages)  # Garante que a página não ultrapasse o limite

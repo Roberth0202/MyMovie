@@ -7,8 +7,8 @@
         <ul class="flex flex-wrap w-sreen justify-center " >
             {% for series in all_series %}
                 <li class="discovers h-auto rounded-md flex flex-column">
-                    <a href="{% url 'anilist:serie' series.id %}"><img class="bg-white" src="{{ series.poster }}" alt=""></a>
-                    <a href="{% url 'anilist:serie' series.id %}"><p class=" text-white text-lg font-bold " >{{ series.name }}</p></a>
+                    <a href="{% url 'serie' series.id %}"><img class="bg-white" src="{{ series.poster }}" alt=""></a>
+                    <a href="{% url 'serie' series.id %}"><p class=" text-white text-lg font-bold " >{{ series.name }}</p></a>
                 </li>
             {% endfor %}
         </ul>

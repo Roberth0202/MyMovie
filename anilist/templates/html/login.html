@@ -23,7 +23,7 @@
     {% endif %}
 
     <!-- Formulário de login -->
-    <form action="{% url 'anilist:login' %}" class="form" method="POST">
+    <form action="{% url 'login' %}" class="form" method="POST">
         {% csrf_token %}
         <!-- Campo de entrada para o nome de usuário -->
         <input type="text" id="username" name="username" class="" autofocus autocomplete="off" placeholder="Usuario">
@@ -35,12 +35,12 @@
 
     <!-- Link para recuperação de senha -->
     <p class="absolute top-75 ">
-        <a href="#" style="color: rgb(3, 162, 224);"> Esqueci minha senha</a>
+        <a href="{%url 'password_reset' %}" style="color: rgb(3, 162, 224);"> Esqueci minha senha</a>
     </p>
 
     <!-- Link para cadastro de nova conta -->
     <div class="absolute flex top-105">
-        <p class="relative text-white text-sm">Não tem uma conta?<a href="{% url 'anilist:register' %}" style="color: rgb(3, 162, 224);"> Cadastre-se</a></p></div>
+        <p class="relative text-white text-sm">Não tem uma conta?<a href="{% url 'register' %}" style="color: rgb(3, 162, 224);"> Cadastre-se</a></p></div>
 </div>
 
 {% endblock %}

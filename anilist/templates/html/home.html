@@ -23,10 +23,10 @@
             <ul class="flex gap-5">
                 {% for movie in popular_movie %}
                     <li class="list-serie-filme relative flex-shrink-0 rounded-md flex flex-col items-center">
-                        <a href="{% url 'anilist:filme' movie.id %}">
+                        <a href="{% url 'filme' movie.id %}">
                             <img src="{{movie.poster}}" class="rounded-md h-72" alt="">
                         </a>
-                        <a class="relative left-2" href="{% url 'anilist:filme' movie.id %}">
+                        <a class="relative left-2" href="{% url 'filme' movie.id %}">
                             <p class="w-full text-white text-sm font-bold text-ellipsis">{{movie.name}}</p>
                         </a>
                     </li>
@@ -54,10 +54,10 @@
             <ul class="flex gap-5">
                 {% for series in popular_serie %}
                     <li class="list-serie-filme flex-shrink-0 rounded-md flex flex-col items-center">
-                        <a href="{% url 'anilist:serie' series.id %}">
+                        <a href="{% url 'serie' series.id %}">
                             <img src="{{series.poster}}" class="rounded-md h-72" alt="">
                         </a>
-                        <a href="{% url 'anilist:serie' series.id %}" class="relative left-2">
+                        <a href="{% url 'serie' series.id %}" class="relative left-2">
                             <p class="w-full text-white text-sm font-bold text-ellipsis">{{series.name}}</p>
                         </a>
                     </li>

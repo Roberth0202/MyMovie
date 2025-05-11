@@ -16,7 +16,7 @@
 {% endif %}
 
 <div class="absolute flex w-72 justify-center top-20 ">
-    <form action="{% url 'anilist:register' %}" method="POST" class="absolute flex-col space-y-7">
+    <form action="{% url 'register' %}" method="POST" class="absolute flex-col space-y-7">
     {% csrf_token %}
         <input type="text" id="name" name="name" class="box-border w-72 p-2 bg-transparent focus:border-b-2 border-white outline-0 text-white" autofocus required autocomplete="off" placeholder="Nome"">
         <input type="email" id="1email" name="1email" class="box-border w-72 p-2 bg-transparent focus:border-b-2 border-white focus:invalid:border-ted-700 outline-0 text-white" required autocomplete="off" placeholder="Email"">

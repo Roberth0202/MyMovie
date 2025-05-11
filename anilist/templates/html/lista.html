@@ -8,10 +8,10 @@
             {% for itens in midias %}
                 {% if itens.type == 'movie' %}
                     <li class='w-44'>
-                        <a href="{% url 'anilist:filme' itens.id %}">
+                        <a href="{% url 'filme' itens.id %}">
                             <img class="rounded-md w-full h-60 object-cover" src="{{itens.poster}}" alt="">
                         </a>
-                        <a class='aba text-white font-bold' href="{% url 'anilist:filme' itens.id %}"">
+                        <a class='aba text-white font-bold' href="{% url 'filme' itens.id %}"">
                             <p class="text-white font-bold text-ellipsis overflow-hidden w-full px-2">{{itens.name}}</p>
                         </a>
                     </li>
@@ -19,10 +19,10 @@
 
                 {% if itens.type == 'tv' %}
                     <li class='w-44'>
-                        <a href="{% url 'anilist:serie' itens.id %}"">
+                        <a href="{% url 'serie' itens.id %}"">
                             <img class="rounded-md object-cover w-full h-60 " src="{{itens.poster}}" alt="">
                         </a>
-                        <a class='aba text-white font-bold' href="{% url 'anilist:serie' itens.id %}">
+                        <a class='aba text-white font-bold' href="{% url 'serie' itens.id %}">
                             <p class="text-white font-bold text-ellipsis overflow-hidden w-full px-2">{{itens.name}}</p>
                         </a>
                     </li>

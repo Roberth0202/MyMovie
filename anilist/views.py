@@ -309,3 +309,4 @@ def register(request):
         return redirect('/page/login/')
     
     return render(request, 'html/cad.html')
+#----------------------- Tela de redefinição de senha -----------------------

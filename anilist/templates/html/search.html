@@ -8,19 +8,19 @@
         {% for searchs in search %}
             <li class="flex-shrink-0 w-40 h-auto rounded-md flex flex-col items-center relative">
                 {% if searchs.media_type == 'movie' %}
-                <a href="{% url 'anilist:filme' searchs.id %}" aria-label="{{ searchs.name }}">
+                <a href="{% url 'filme' searchs.id %}" aria-label="{{ searchs.name }}">
                     <img src="{{ searchs.poster }}" alt="Poster de {{ searchs.name }}" class="rounded-md w-full h-60 object-cover">
                 </a>
-                <a href="{% url 'anilist:filme' searchs.id %}" class="mt-2 text-center">
+                <a href="{% url 'filme' searchs.id %}" class="mt-2 text-center">
                     <p class="text-white text-sm font-bold text-ellipsis overflow-hidden w-full ">{{ searchs.name }}</p>
                 </a>
                 {%  endif %}
 
                 {% if searchs.media_type == 'tv' %}
-                <a href="{% url 'anilist:serie' searchs.id %}" aria-label="{{ searchs.name }}">
+                <a href="{% url 'serie' searchs.id %}" aria-label="{{ searchs.name }}">
                     <img src="{{ searchs.poster }}" alt="Poster de {{ searchs.name }}" class="rounded-md w-full h-60 object-cover">
                 </a>
-                <a href="{% url 'anilist:serie' searchs.id %}" class="mt-2 text-center">
+                <a href="{% url 'serie' searchs.id %}" class="mt-2 text-center">
                     <p class="text-white font-bold text-sm text-ellipsis overflow-hidden ">{{ searchs.name }}</p>
                 </a>
                 {%  endif %}
