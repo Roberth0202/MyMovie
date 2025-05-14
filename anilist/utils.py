@@ -1,5 +1,21 @@
 from .models import Lista
 from django.core.exceptions import ValidationError
+from django import forms
+from django.contrib.auth.forms import SetPasswordForm
+from django.contrib.auth.password_validation import validate_password
+
+class CustomSetPasswordForm(SetPasswordForm):
+    """
+    Formulário personalizado para redefinir a senha do usuário.
+    Adiciona validação de senha personalizada.
+    """
+    def clean_new_password1(self):
+        password = self.cleaned_data.get('new_password1')
+        try:
+            validate_password(password, self.user)
+        except ValidationError as e:
+            raise forms.ValidationError(e.messages)
+        return password
 
 def adicionar_midia(usuario, media_id, midia_type):
     """

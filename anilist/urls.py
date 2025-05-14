@@ -20,7 +20,7 @@ urlpatterns = [
     path('reset-password/done/', PasswordResetDoneView.as_view(template_name='html/password_reset_done.html'), name='password_reset_done'),
 
     # Link enviado por e-mail com token
-    path('reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(template_name='html/password_reset_confirm.html'), name='password_reset_confirm'),
+    path('reset/<uidb64>/<token>/', views.CustomPasswordResetConfirmView.as_view(template_name='html/password_reset_confirm.html'), name='password_reset_confirm'),
     
     # Página de confirmação final
     path('reset/done/', PasswordResetCompleteView.as_view(template_name='html/password_reset_complete.html'), name='password_reset_complete'),

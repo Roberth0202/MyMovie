@@ -5,11 +5,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout
 from django.contrib.auth.password_validation import get_password_validators
+from django.contrib.auth.views import PasswordResetConfirmView
+from .utils import adicionar_midia, remover_midia, CustomSetPasswordForm
 from django.core.exceptions import ValidationError
 from django.conf import settings
 from .movie_functions import *
-from django.core.exceptions import ValidationError
-from .utils import adicionar_midia, remover_midia
 from .models import Lista
 from django.http import JsonResponse
 
@@ -310,3 +310,5 @@ def register(request):
     
     return render(request, 'html/cad.html')
 #----------------------- Tela de redefinição de senha -----------------------
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    form_class = CustomSetPasswordForm
