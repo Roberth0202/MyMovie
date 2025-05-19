@@ -1,30 +1,21 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-<main class="relative flex w-full justify-center">
-    <h1 class="text-white font-bold tex-md ">Lista de Filmes/Séries</h1>
-    <div class="absolute w-full ml-4 top-8">
-        <ul class='flex flex-wrap gap-4'>
+<main class="relative flex flex-col w-screen items-center">
+    <div class="container-movies flex">
+        <ul class='flex flex-wrap w-sreen justify-center'>
             {% for itens in midias %}
                 {% if itens.type == 'movie' %}
-                    <li class='w-44'>
-                        <a href="{% url 'filme' itens.id %}">
-                            <img class="rounded-md w-full h-60 object-cover" src="{{itens.poster}}" alt="">
-                        </a>
-                        <a class='aba text-white font-bold' href="{% url 'filme' itens.id %}"">
-                            <p class="text-white font-bold text-ellipsis overflow-hidden w-full px-2">{{itens.name}}</p>
-                        </a>
+                    <li class='discovers'>
+                        <a href="{% url 'filme' itens.id %}"><img class="" src="{{itens.poster}}" loading="lazy" alt=""></a>
+                        <a class='' href="{% url 'filme' itens.id %}"><p class="text-white font-bold">{{itens.name}}</p></a>
                     </li>
                 {% endif %}
 
                 {% if itens.type == 'tv' %}
-                    <li class='w-44'>
-                        <a href="{% url 'serie' itens.id %}"">
-                            <img class="rounded-md object-cover w-full h-60 " src="{{itens.poster}}" alt="">
-                        </a>
-                        <a class='aba text-white font-bold' href="{% url 'serie' itens.id %}">
-                            <p class="text-white font-bold text-ellipsis overflow-hidden w-full px-2">{{itens.name}}</p>
-                        </a>
+                    <li class='discovers'>
+                        <a href="{% url 'serie' itens.id %}""><img class="" src="{{itens.poster}}" loading="lazy" alt=""></a>
+                        <a class='' href="{% url 'serie' itens.id %}"><p class="text-white font-bold">{{itens.name}}</p></a>
                     </li>
                 {% endif %}
             {% endfor %}

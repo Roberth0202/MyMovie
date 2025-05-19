@@ -2,11 +2,11 @@
 
 {% block content %}
 
-<main class=" min-h-full w-screen">
-    <div class="container-movies flex ">
+<main class="min-h-full w-screen">
+    <div class="container-movies flex">
         <ul class="flex flex-wrap w-sreen justify-center ">
             {% for filmes in all_movies %}
-                <li class="discovers h-auto rounded-md flex flex-column">
+                <li class="discovers flex flex-column">
                     <a href="{% url 'filme' filmes.id %}"><img class="bg-white" src="{{ filmes.poster }}" alt=""></a>
                     <a href="{% url 'filme' filmes.id %}"><p class=" text-white font-bold">{{ filmes.name }}</p></a>
                 </li>

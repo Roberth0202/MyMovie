@@ -116,6 +116,20 @@
 {% block content %}
 {% endblock %}
 
+<footer class="relative bg-gray-900 text-white py-6 mt-10 border-t border-gray-800">
+    <div class="container mx-auto flex flex-col md:flex-row justify-between items-center px-4">
+
+        <div class="text-sm  text-gray-400 mb-2 md:mb-0">
+            &copy; {% now 'Y' %} MyMovie. Todos os direitos reservados.<br>
+            <p>Dados fornecidos por <a href="https://developer.themoviedb.org/docs/getting-started" target="_blank" class="underline hover:text-gray-200">TMDB</a>.</p>
+        </div>
+        <div class="flex gap-4">
+            <a href="https://github.com/Roberth0202" target="_blank" class="hover:text-gray-200 transition">GitHub</a>
+            <a href="mailto:roberthcontato09@gmail.com" class="hover:text-gray-200 transition">Contato</a>
+        </div>
+    </div>
+</footer>
+
 <!--menu-->
 <script>
     function clickmenu(){

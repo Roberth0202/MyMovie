@@ -12,6 +12,7 @@ from django.conf import settings
 from .movie_functions import *
 from .models import Lista
 from django.http import JsonResponse
+import asyncio
 
 #------------------ Função para verificar se a mídia já está na lista   ------------------
 def verificar_midia_na_lista(user_id, media_id, midia_type):
@@ -165,22 +166,35 @@ def detail_serie(request, series_id):
 #----------------------- Lista de filmes/series do usuario -----------------------
 @login_required(login_url='/page/login/')
 def lista(request):
-    object_list = Lista.objects.filter(user_id=request.user)
-    
-    # Inicializa variáveis para evitar erros se as condições não forem atendidas
-    midias = []
+    # 1. Consulta todos os objetos da lista do usuário normalmente (ORM síncrono)
+    object_list = list(Lista.objects.filter(user_id=request.user))
 
-    # Iterar sobre os objetos encontrados e processar conforme o tipo de mídia
-    for obj in object_list:
+    # 2. Função assíncrona para buscar detalhes de cada mídia em paralelo usando asyncio.to_thread
+    async def get_midia(obj):
         if obj.midia_type == 'movie':
-            filme = info_movie(obj.media_id)  # Chamar a função para obter os detalhes do filme
-            midias.append(filme)
+            # info_movie é uma função bloqueante, então executamos em thread separada
+            return await asyncio.to_thread(info_movie, obj.media_id)
         elif obj.midia_type == 'tv':
-            serie = info_serie(obj.media_id)  # Chamar a função para obter os detalhes da série
-            midias.append(serie)
-    
+            return await asyncio.to_thread(info_serie, obj.media_id)
+        return None
+
+    # 3. Função para criar e executar todas as tarefas de busca em paralelo
+    async def gather_midias():
+        tasks = [get_midia(obj) for obj in object_list]
+        return await asyncio.gather(*tasks)
+
+    # 4. Executa as buscas em paralelo usando um novo event loop
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    detalhes_midias = loop.run_until_complete(gather_midias())
+    loop.close()
+
+    # 5. Remove possíveis None (caso algum objeto não seja movie ou tv)
+    midias = [m for m in detalhes_midias if m]
+
+    # 6. Passa os detalhes para o template
     context = {
-        'midias' : midias,
+        'midias': midias,
     }
     return render(request, "html/lista.html", context)
 
