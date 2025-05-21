@@ -2,6 +2,7 @@ import json
 from decouple import config
 import requests
 import logging
+
 api_key = config("api_key")
 #url do geral
 base_url = 'https://api.themoviedb.org/3'
@@ -155,7 +156,6 @@ def search_movies(query):
     resposta = requests.get(url, headers=headers, params=parametros)
     
     resultados = []
-    ids_unicos = set()
     
     if resposta.status_code == 200:
         dados = resposta.json()

@@ -13,8 +13,9 @@ from .movie_functions import *
 from .models import Lista
 from django.http import JsonResponse
 import asyncio
+from asgiref.sync import sync_to_async
 
-#------------------ Função para verificar se a mídia já está na lista   ------------------
+#------------------------------------------------- FUNÇÃO PARA VERIFICAR SE A MIDIA ESTA NA LISTA --------------------------------------
 def verificar_midia_na_lista(user_id, media_id, midia_type):
     """Verifica se uma mídia já está na lista do usuário.
 
@@ -28,9 +29,9 @@ def verificar_midia_na_lista(user_id, media_id, midia_type):
     """
     return Lista.objects.filter(user_id=user_id, media_id=media_id, midia_type=midia_type).exists()
 
-#-------------------------- Adiciona filme/serie na lista do usuario --------------------------
+#--------------------------------------------------- ADICIONAR FILME/SERIE NA LISTA DO USUARIO -------------------------------------------
 @login_required(login_url = '/page/login/')
-def add_to_list(request, media_id, midia_type):
+async def add_to_list(request, media_id, midia_type):
     """Adiciona uma mídia à lista do usuário.
 
     Args:
@@ -44,14 +45,14 @@ def add_to_list(request, media_id, midia_type):
         Se ocorrer um erro (por exemplo, a mídia já está na lista), exibe uma mensagem de erro.
     """
     try:
-        adicionar_midia(request.user, media_id, midia_type)
+        await asyncio.to_thread(adicionar_midia, request.user, media_id, midia_type)
         
     except Exception:
         messages.error(request, f'Mídia ja está na sua lista.', extra_tags='erro')
 
-#-------------------------- Remove filme/serie da lista do usuario --------------------------
+#--------------------------------------------------- REMOVE FILME/SÉRIE DA LISTA DO USUARIO ---------------------------------------------
 @login_required(login_url = '/page/login/')
-def remove_from_list(request, media_id, midia_type):
+async def remove_from_list(request, media_id, midia_type):
     """Remove uma mídia da lista do usuário.
     Args:
         request (HttpRequest): O objeto de solicitação HTTP que contém informações sobre a solicitação atual.
@@ -70,14 +71,14 @@ def remove_from_list(request, media_id, midia_type):
         if not verificar_midia_na_lista(request.user, media_id, midia_type):  # Adicione uma verificação
             raise ValueError("Mídia não está na lista.")
         
-        remover_midia(request.user, media_id, midia_type)
+        await asyncio.to_thread(remover_midia, request.user, media_id, midia_type)
         messages.success(request, 'Foi removido da sua lista!', extra_tags='sucesso')
     except ValueError as e:
         messages.error(request, str(e), extra_tags='erro')
     except Exception:
         messages.error(request, 'Erro ao remover mídia da lista.', extra_tags='erro')
 
-# ----------------------- filmes e séries em alta --------------------------
+# ----------------------------------------------------- FILMES E SÉRIES EM ALTA ------------------------------------------------
 def home(request):
     popular_movie = filme_populares
     popular_serie = serie_populares
@@ -89,7 +90,7 @@ def home(request):
     }
     return render(request, 'html/home.html', context)
 
-#--------------------------- Função de pesquisa --------------------------
+#--------------------------------------------------------- FUNÇÃO DE PESQUISA --------------------------------------------------
 def pesquisa(request):
     query = request.GET.get('q')
     searches = search_movies(query)
@@ -98,32 +99,31 @@ def pesquisa(request):
     }
     return render(request, 'html/search.html', context)
 
-#--------------------------- Detalhes do filme --------------------------
-def detail_movie(request, movie_id):
+#--------------------------------------------------------- DETALHES DO FILME --------------------------------------------------
+async def detail_movie(request, movie_id):
     if request.method == "POST":
         media_id = request.POST.get('media_id')
         midia_type = request.POST.get('midia_type')
         action = request.POST.get('action')
         
         if action == 'add':
-            add_to_list(request, media_id, midia_type)
+            await add_to_list(request, media_id, midia_type)
             return JsonResponse({'status': 'added'})
         elif action == 'remove':
-            remove_from_list(request, media_id, midia_type)
+            await remove_from_list(request, media_id, midia_type)
             return JsonResponse({'status': 'removed'})
         
         # Muito importante: colocar return aqui também
         return JsonResponse({'status': 'error'})
 
-    filme = info_movie(movie_id)
+    filme = await asyncio.to_thread(info_movie, movie_id)
+    
     # Verifica se o usuário está autenticado antes de chamar a função
-    if request.user.is_authenticated:
-        esta_na_lista = verificar_midia_na_lista(
-            request.user,
-            movie_id,
-            'movie')
+    is_authenticated = await sync_to_async(lambda u: u.is_authenticated)(request.user)
+    if is_authenticated:
+        esta_na_lista = await asyncio.to_thread(verificar_midia_na_lista, request.user, movie_id, 'movie')
     else:
-        esta_na_lista= False  # Se o usuário não estiver autenticado, defina como False
+        esta_na_lista = False  # Se o usuário não estiver autenticado, defina como False
         
     context = {
         'filme': filme,
@@ -131,29 +131,27 @@ def detail_movie(request, movie_id):
     }
     return render(request, 'html/infomovie.html', context)
 
-#--------------------------- Detalhes da série --------------------------
-def detail_serie(request, series_id):
+#------------------------------------------------- DETALHES DA SÉRIE ---------------------------------------------------
+async def detail_serie(request, series_id):
     if request.method == "POST":
         media_id = request.POST.get('media_id')
         midia_type = request.POST.get('midia_type')
         action = request.POST.get('action')
         
         if action == 'add':
-            add_to_list(request, media_id, midia_type)
+            await add_to_list(request, media_id, midia_type)
             return JsonResponse({'status': 'added'})
         elif action == 'remove':
-            remove_from_list(request, media_id, midia_type)
+            await remove_from_list(request, media_id, midia_type)
             return JsonResponse({'status': 'removed'})
         
         # Muito importante: colocar return aqui também
         return JsonResponse({'status': 'error'})
     
-    serie = info_serie(series_id)
-    if request.user.is_authenticated:
-        esta_na_lista = verificar_midia_na_lista(
-            request.user,
-            series_id,
-            'tv')
+    serie = await asyncio.to_thread(info_serie, series_id)
+    is_authenticated = await sync_to_async(lambda u: u.is_authenticated)(request.user)
+    if is_authenticated:
+        esta_na_lista = await asyncio.to_thread(verificar_midia_na_lista, request.user, series_id,'tv')
     else:
         esta_na_lista = False
     
