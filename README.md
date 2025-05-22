@@ -1,6 +1,6 @@
-# Projeto MyMovie (Anilist Clone)
+# Projeto MyMovie
 
-Este projeto é um sistema web para gerenciamento de listas de filmes e séries, inspirado no Anilist, desenvolvido com Django.
+Este projeto é um sistema web para gerenciamento de listas de filmes e séries, inspirado no MyMovie, desenvolvido com Django.
 
 ## Funcionalidades
 - Cadastro e autenticação de usuários
@@ -10,7 +10,7 @@ Este projeto é um sistema web para gerenciamento de listas de filmes e séries,
 - Interface moderna e responsiva
 
 ## Estrutura do Projeto
-- `anilist/`: App principal com modelos, views, urls e templates
+- `mymovie/`: App principal com modelos, views, urls e templates
 - `mysite/`: Configurações do projeto Django
 - `templates/`: Templates HTML para as páginas
 - `static/`: Arquivos estáticos (CSS, JS, imagens)

@@ -6,6 +6,6 @@
     "tailwindcss": "^4.1.3"
   },
   "scripts": {
-    "watch:css": "tailwindcss -i ./anilist/static/src/input.css -o ./anilist/static/dist/styles.css --watch"
+    "watch:css": "tailwindcss -i ./mymovie/static/src/input.css -o ./mymovie/static/dist/styles.css --watch"
   }
 }
