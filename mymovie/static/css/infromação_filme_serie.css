@@ -17,7 +17,7 @@
     justify-content: center;
 }
 
-/*------------ POSTER DO FILME ----------*/
+/*------------ POSTER DO FILME/SÉRIE ----------*/
 .poster img {
     width: 100%;
 }
@@ -65,7 +65,7 @@
     cursor: pointer;
 }
 
-/*------------------------------------------ CONTAINER INFORMAÇÕES DO FILME --------------------------------------*/
+/*------------------------------------------ CONTAINER INFORMAÇÕES DO FILME/SÉRIE --------------------------------------*/
 .info-container{
     width: 70%;
     height: auto;
@@ -74,7 +74,7 @@
     flex-direction: column;
 
 }
-/*-------------------- Generos do filme -------------------*/
+/*-------------------- Generos do filme/série -------------------*/
 .tag{
     display: inline-block;
     border: 0.2px solid #fff;
@@ -84,11 +84,19 @@
     font-weight: 700;
 }
 
-/*-------------------- Descrição do filme -------------------*/
+/*-------------------- Descrição do filme/série -------------------*/
 .description{
     margin-top: 15px;
     line-height: 1.6;
     font-size: 1rem;
+}
+
+/*-------------------- Trailer do filme/série -------------------*/
+.trailer{
+    margin-top: 20px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
 }
 
 @media screen and (max-width: 700px) {

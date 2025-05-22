@@ -2,6 +2,7 @@ import json
 from decouple import config
 import requests
 import logging
+import asyncio
 
 api_key = config("api_key")
 #url do geral
@@ -141,6 +142,33 @@ def info_serie(series_id):
             'type' : 'tv',
         }
         return serie_detail
+    
+# FUNÇÃO QUE PEGA O ID DO FILME E SÉRIE E RETORNA O VIDEO TRAILER
+def get_trailer(media_type, media_id):
+    url = f"{base_url}/{media_type}/{media_id}/videos?language=pt-BR"
+    parametros = {
+        "api_key": api_key,
+    }
+    # Faz a requisição para obter os vídeos
+    resposta = requests.get(url, headers=headers, params=parametros)
+    
+    # Verifica se a resposta foi bem-sucedida
+    if resposta.status_code == 200:
+        dados = resposta.json()
+        
+        # Verifica se há resultados e se o trailer é do YouTube
+        for video in dados.get('results', []):
+            
+            # Verifica se o vídeo é um trailer e do YouTube
+            if video['type'] == 'Trailer' and video['site'] == 'YouTube':
+                trailer_key = video['key']
+                trailer_url = f"https://www.youtube.com/embed/{trailer_key}"
+                return trailer_url
+            
+    # Se não encontrar trailer, retorna None
+    return None
+                
+                
         
 #função pega a pesquisa e entrega os filmes e series
 def search_movies(query):

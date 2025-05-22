@@ -117,6 +117,7 @@ async def detail_movie(request, movie_id):
         return JsonResponse({'status': 'error'})
 
     filme = await asyncio.to_thread(info_movie, movie_id)
+    trailer = await asyncio.to_thread(get_trailer,'movie', movie_id)
     
     # Verifica se o usuário está autenticado antes de chamar a função
     is_authenticated = await sync_to_async(lambda u: u.is_authenticated)(request.user)
@@ -127,6 +128,7 @@ async def detail_movie(request, movie_id):
         
     context = {
         'filme': filme,
+        'trailer': trailer,
         'esta_na_lista': esta_na_lista,  # Adiciona a variável ao contexto
     }
     return render(request, 'html/infomovie.html', context)
@@ -148,7 +150,11 @@ async def detail_serie(request, series_id):
         # Muito importante: colocar return aqui também
         return JsonResponse({'status': 'error'})
     
+    # 
     serie = await asyncio.to_thread(info_serie, series_id)
+    trailer = await asyncio.to_thread(get_trailer,'tv', series_id)
+    
+    
     is_authenticated = await sync_to_async(lambda u: u.is_authenticated)(request.user)
     if is_authenticated:
         esta_na_lista = await asyncio.to_thread(verificar_midia_na_lista, request.user, series_id,'tv')
@@ -157,6 +163,7 @@ async def detail_serie(request, series_id):
     
     context = {
         'serie': serie,
+        'trailer': trailer,
         'esta_na_lista': esta_na_lista,  # Adiciona a variável ao contexto
     }
     return render(request, 'html/infoserie.html', context)
