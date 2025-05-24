@@ -1,3 +1,23 @@
+//------------------------------------- SLIDE DE LANAÇAMENTO -------------------------------------
+document.addEventListener('DOMContentLoaded', function() {
+const btnEsquerda3 = document.getElementById('btn-esquerda3');
+const btnDireita3 = document.getElementById('btn-direita3');
+const lista3 = document.getElementById('lista3');
+
+btnEsquerda3.addEventListener('click', function() {
+    lista3.scrollBy({
+        left: -400,
+        behavior: 'smooth'
+    });
+});
+
+btnDireita3.addEventListener('click', function() {
+    lista3.scrollBy({
+        left: 400,
+        behavior: 'smooth'
+    });
+});
+});
 //----------------------------------- SLIDE DA FILME ESQUERDA E DIREITA -------------------------------------
 document.addEventListener('DOMContentLoaded', function() {
 const btnEsquerda = document.getElementById('btn-esquerda');

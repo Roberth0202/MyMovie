@@ -4,8 +4,37 @@
 {% block content %} 
 <main id="container" class="relative flex flex-col justify-center items-center">
     
-    <!------------- Seção de Filmes -------------->
+    <!------------- Lançamento -------------->
+    <section class="container-list relative flex w-full h-96 justify-center">
+        <div class="Tranding absolute flex left-16 z-10 top-1">
+            <h1 class="relative text-white text-xl font-bold">Lançamentos</h1>
+        </div>
 
+        <div class="seta-rolagem flex h-10 top-40 text-white text-xl font-bold left-4">
+            <button class="flex" id="btn-esquerda3"><img src="{% static 'img/arrow_back.svg' %}" alt=""></button>
+        </div>
+
+        <div class="seta-rolagem absolute flex h-10 top-40 text-white text-xl font-bold right-2"> 
+            <button class="flex" id="btn-direita3" ><img src="{% static 'img/arrow_right.svg' %}" alt=""></button>
+        </div>
+
+        <div class="absolute flex h-96 overflow-x-hidden w-11/12 top-10" id="lista3">
+            <ul class="flex gap-5">
+                {% for lancamento in lancamentos_filmes %}
+                    <li class="list-serie-filme flex-shrink-0 rounded-md flex flex-col items-center">
+                        <a href="{% url 'filme' lancamento.id %}">
+                            <img src="{{lancamento.poster}}" class="rounded-md h-72" alt="">
+                        </a>
+                        <a href="{% url 'filme' lancamento.id %}" class="media_name relative">
+                            <p class="w-full text-white font-bold text-ellipsis">{{lancamento.name}}</p>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+
+    <!------------- Seção de Filmes -------------->
     <section class="relative container-list flex w-full h-96  justify-center">
         <div class="Tranding absolute flex left-16 z-10 top-1">
             <h1 class="relative text-white text-xl font-bold">Filmes em alta</h1>
@@ -26,8 +55,8 @@
                         <a href="{% url 'filme' movie.id %}">
                             <img src="{{movie.poster}}" class="rounded-md h-72" alt="">
                         </a>
-                        <a class="relative left-2" href="{% url 'filme' movie.id %}">
-                            <p class="w-full text-white text-sm font-bold text-ellipsis">{{movie.name}}</p>
+                        <a class="media_name relative" href="{% url 'filme' movie.id %}">
+                            <p class="w-full text-white font-bold text-ellipsis">{{movie.name}}</p>
                         </a>
                     </li>
                 {% endfor %}
@@ -57,7 +86,7 @@
                         <a href="{% url 'serie' series.id %}">
                             <img src="{{series.poster}}" class="rounded-md h-72" alt="">
                         </a>
-                        <a href="{% url 'serie' series.id %}" class="relative left-2">
+                        <a href="{% url 'serie' series.id %}" class="media_name relative">
                             <p class="w-full text-white text-sm font-bold text-ellipsis">{{series.name}}</p>
                         </a>
                     </li>

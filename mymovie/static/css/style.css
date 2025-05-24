@@ -14,6 +14,10 @@ header{
     margin-top: 50px;
 }
 
+.media-container{
+    background-color: seagreen;
+}
+
 .navbar{
     position: relative;
     color: beige;
@@ -318,6 +322,14 @@ header{
 
 .tranding{
     z-index: 1;
+    font-family: "Share Tech", sans-serif;
+}
+
+.media_name{
+    font-size: 0.9rem;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    text-decoration: beige;
+    text-align: center;
 }
 
 footer{

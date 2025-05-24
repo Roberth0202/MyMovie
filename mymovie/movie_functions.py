@@ -2,6 +2,7 @@ import json
 from decouple import config
 import requests
 import logging
+from time import strftime
 import asyncio
 
 api_key = config("api_key")
@@ -18,6 +19,40 @@ headers = {
 # Configuração básica do logging
 logging.basicConfig(level=logging.INFO)
 
+# ------------------------------FILMES/SERIE EM LANÇAMENTO---------------------------------------
+def lancamento_filmes():
+    date_atual = strftime("%Y-%m-%d")
+    
+    url = f"{base_url}/discover/movie?include_adult=false&include_video=false&language=pt-BR&page=1&primary_release_year=2025&primary_release_date.gte={date_atual}&sort_by=popularity.desc"
+    
+    parametros = {
+        'api_key': api_key,
+    }
+    
+    resposta = requests.get(url, headers=headers, params=parametros)
+    
+    if resposta.status_code == 200:
+        dados = resposta.json()
+        
+        lançamentos = []
+        
+        for lançamento in dados['results']:
+            
+            if lançamento['poster_path'] == None:
+                continue
+            
+            poster = lançamento['poster_path']
+            name = lançamento['title']
+            id = lançamento['id']
+            
+            lançamentos.append({
+                'id' : id,
+                'name' : name,
+                'poster' : poster_url + 'w342' + poster,
+            })
+            
+        return lançamentos
+    
 # Filmes populares da semana
 def filme_populares():
     """
@@ -43,8 +78,7 @@ def filme_populares():
     if resposta.status_code == 200:
         dados = resposta.json()
         if 'results' in dados:
-            filmes = [
-                {
+            filmes = [{
                     'name': movie['title'],
                     'poster': poster_url + 'w342' + movie['poster_path'],
                     'id': movie['id']
@@ -251,6 +285,7 @@ def Filmes(page):
         'total_pages': total_pages  # Total de páginas, limitado a 500
     }
     
+# mostra uma lista de series
 def Series(page):
     url = f'{base_url}/discover/tv'
     
@@ -296,3 +331,5 @@ def Series(page):
         'total_pages' : total_pages,
     }
     
+if __name__ == "__main__":
+    print(lancamento_filmes())

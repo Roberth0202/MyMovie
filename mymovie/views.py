@@ -82,10 +82,13 @@ async def remove_from_list(request, media_id, midia_type):
 def home(request):
     popular_movie = filme_populares
     popular_serie = serie_populares
+    lancamentos_filmes = lancamento_filmes
     search = search_movies
+    
     context = {
         'popular_movie' : popular_movie,
         'popular_serie' : popular_serie,
+        'lancamentos_filmes' : lancamentos_filmes,
         'search' : search,
     }
     return render(request, 'html/home.html', context)
