@@ -1,3 +1,4 @@
+menu
 //------------------------------------- SLIDE DE LANAÇAMENTO -------------------------------------
 document.addEventListener('DOMContentLoaded', function() {
 const btnEsquerda3 = document.getElementById('btn-esquerda3');
@@ -71,6 +72,35 @@ function toggleMenu() {
     // Impedir rolagem quando o menu está aberto
     document.body.classList.toggle('menu-open');
 }
+
+//------------------------------------- MENU perfil --------------------------------------------
+
+function clickmenu(){
+    const botaomenu = document.getElementById('profile-button');
+    const menu = document.getElementById('menu');
+
+    //quando clicar no botão, alterna a classe 'active' no menu
+    botaomenu.addEventListener('click', function(event) {
+        event.stopPropagation(); // Impede que o clique se propague para o documento
+        menu.classList.toggle('ativo');
+    });
+}
+    
+//------------------------------------- FECHA O MENU PERFIL SE CLICAR FORA -------------------------------------
+
+document.addEventListener('click', (event) => {
+    // Se o menu estiver aberto e o clique não foi no menu
+    if (menu.classList.contains('ativo') && !menu.contains(event.target)) {
+        menu.classList.remove('ativo'); // Fecha o menu
+    }
+});
+
+// Impede que o clique no menu feche o menu
+menu.addEventListener('click', (event) => {
+    event.stopPropagation(); // Impede que o clique se propague para o documento
+});
+
+
 
 //----------------- FECHA O MENU QUANDO APERTA EM UM LINK --------------------
 document.querySelectorAll('.nav-links a').forEach(link => {

@@ -68,8 +68,7 @@
                         
                         {% if user.is_authenticated %}
                             <div class="mobile-user-info">
-                                <img src="{% static 'img/usuario1.png' %}" alt="Profile" class="w-10 h-10 rounded-full inline-block">
-                                <span class="ml-2 text-white">Minha Conta</span>
+
                                 <ul class="mobile-user-menu">
                                     <li><a href="#" class="block py-2 text-white hover:text-gray-300">Configuração</a></li>
                                     <li>
@@ -96,16 +95,20 @@
                 </form>
 
                 {% if user.is_authenticated %}
+                <!---------------------- Menu perfil ------------------->
                     <div class="account-user relative">
-                        <button id="profile-button" class="flex items-center focus:outline-none  border-solid" onclick="clickmenu()">
+
+                        <!-- Botão de perfil -->
+                        <button id="profile-button" class="profile-button flex items-center focus:outline-none border-solid" onclick="clickmenu()">
                             <img src="{% static 'img/usuario1.png' %}" alt="Profile" class="w-10 h-10 rounded-full">
                         </button>
-                        <div id="menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-10">
+                        
+                        <div id="menu" class=" absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-10">
                             <ul>
-                                <li><a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Configuração</a></li>
+                                <li><a href="#" class="block cursor-pointer px-4 py-2 text-gray-800 hover:bg-gray-200">Configuração</a></li>
                                 <li><form action="{% url 'logout' %}" method="POST" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">
                                 {% csrf_token %}
-                                <button type="submit" class="w-full text-left">Sair</button>
+                                    <button type="submit" class="w-full cursor-pointer p-3 text-left">Sair</button>
                                 </form></li>
                             </ul>
                         </div>
@@ -134,16 +137,6 @@
     </div>
 </footer>
 
-<!--menu-->
-<script>
-    function clickmenu(){
-        if (menu.style.display == 'block') {
-            menu.style.display = 'none';
-        } else {
-            menu.style.display = 'block';
-        }
-    }
-</script>
 <!--js do tailwind-->
 <script src="{% static 'js/script.js' %}"></script>
 <!-- Toastr JS -->

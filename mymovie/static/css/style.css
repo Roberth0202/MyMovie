@@ -10,6 +10,18 @@ header{
     align-items: center;
 }
 
+#profile-button{
+    cursor: pointer;
+}
+
+#menu{
+    display: none;
+    cursor: pointer;
+}
+#menu.ativo{
+    display: block;
+}
+
 .container-list{
     margin-top: 50px;
 }
@@ -318,6 +330,11 @@ header{
 .seta-rolagem{
     position: absolute;
     z-index: 10;
+}
+
+.seta-rolagem button{
+    cursor: pointer;
+
 }
 
 .tranding{
