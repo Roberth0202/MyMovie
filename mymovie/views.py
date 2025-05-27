@@ -30,7 +30,7 @@ def verificar_midia_na_lista(user_id, media_id, midia_type):
     return Lista.objects.filter(user_id=user_id, media_id=media_id, midia_type=midia_type).exists()
 
 #--------------------------------------------------- ADICIONAR FILME/SERIE NA LISTA DO USUARIO -------------------------------------------
-@login_required(login_url = '/page/login/')
+@login_required(login_url = '/login/')
 async def add_to_list(request, media_id, midia_type):
     """Adiciona uma mídia à lista do usuário.
 
@@ -51,7 +51,7 @@ async def add_to_list(request, media_id, midia_type):
         messages.error(request, f'Mídia ja está na sua lista.', extra_tags='erro')
 
 #--------------------------------------------------- REMOVE FILME/SÉRIE DA LISTA DO USUARIO ---------------------------------------------
-@login_required(login_url = '/page/login/')
+@login_required(login_url = '/login/')
 async def remove_from_list(request, media_id, midia_type):
     """Remove uma mídia da lista do usuário.
     Args:
@@ -172,7 +172,7 @@ async def detail_serie(request, series_id):
     return render(request, 'html/infoserie.html', context)
 
 #----------------------- Lista de filmes/series do usuario -----------------------
-@login_required(login_url='/page/login/')
+@login_required(login_url='/login/')
 def lista(request):
     # 1. Consulta todos os objetos da lista do usuário normalmente (ORM síncrono)
     object_list = list(Lista.objects.filter(user_id=request.user))
@@ -274,7 +274,7 @@ def login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             auth_login(request, user)
-            return redirect('/page/home/')
+            return redirect('/home/')
         else:
             messages.add_message(request, messages.ERROR, 'Usuário ou senha incorretos', extra_tags="login")
             return render(request, 'html/login.html')
@@ -283,7 +283,7 @@ def login(request):
 #----------------------- Tela de logout -----------------------
 def logout_view(request):
     logout(request)
-    return redirect('/page/home')
+    return redirect('/home')
 
 #----------------------- Tela de cadastro -----------------------
 def register(request):
@@ -325,11 +325,12 @@ def register(request):
             messages.error(request, 'Email já está em uso.', extra_tags='erro')
             return render(request, 'html/cad.html')
 
+        # Se tudo estiver correto, cria o usuário
         user = User.objects.create_user(username=username, email=email1, password=password1)
+        # Salva o usuário no banco de dados
         user.save()
         messages.success(request, 'Cadastro realizado com sucesso!', extra_tags='sucesso')
-        return redirect('/page/login/')
-    
+        return redirect('/login/')
     return render(request, 'html/cad.html')
 #----------------------- Tela de redefinição de senha -----------------------
 class CustomPasswordResetConfirmView(PasswordResetConfirmView):

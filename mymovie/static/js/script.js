@@ -236,6 +236,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 action: action,
             }),
         })
+
         .then(response => response.json())
         .then(data => {
             if (data.status === "added") {

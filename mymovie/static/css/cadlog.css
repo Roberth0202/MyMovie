@@ -21,6 +21,11 @@ body {
     z-index: 1;
 }
 
+.titulo-cadastro{
+    width: min( 25em, 90%);
+    text-align: center;
+}
+
 .botao {
     position: absolute;
     cursor: pointer;

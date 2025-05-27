@@ -4,6 +4,6 @@ from mymovie import views
 
 
 urlpatterns = [
-    path('page/', include('mymovie.urls')),
+    path('', include('mymovie.urls')),
     path('admin/', admin.site.urls),
 ]

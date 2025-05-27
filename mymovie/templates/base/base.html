@@ -55,13 +55,17 @@
 
                 <ul class="nav-links flex gap-6">
                     <li class="flex justify-center items-center w-20 h-10 rounded-lg text-lg">
-                        <a href="{% url 'home' %}" class="rotas text-white">Inicio</a></li>
+                        <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}ativo{% endif %}">Inicio</a>
+                    </li>
                     <li class="flex justify-center items-center w-20 h-10 rounded-lg text-lg">
-                        <a href="{% url 'lista' %}" class="rotas text-white">Lista</a></li>
+                        <a href="{% url 'lista' %}" class="{% if request.resolver_match.url_name == 'lista' %}ativo{% endif %}">Lista</a>
+                    </li>
                     <li class="flex justify-center items-center w-20 h-10 rounded-lg text-lg">
-                        <a href="{% url 'filmes' %}" class="rotas text-white">Filmes</a></li>
-                    <li class="flex text-white justify-center items-center  w-20 h-10 rounded-lg text-lg">
-                        <a href="{% url 'series' %}" class="rotas">Séries</a></li>
+                        <a href="{% url 'filmes' %}" class="{% if request.resolver_match.url_name == 'filmes' %}ativo{% endif %}">Filmes</a>
+                    </li>
+                    <li class="flex justify-center items-center  w-20 h-10 rounded-lg text-lg">
+                        <a href="{% url 'series' %}" class="{% if request.resolver_match.url_name == 'series' %}ativo{% endif %}">Séries</a>
+                    </li>
 
             <!------------------ MOBILE: USER NO MENU --------------->
                     <li class="mobile-user">

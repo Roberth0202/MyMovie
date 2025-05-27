@@ -52,16 +52,6 @@ header{
     justify-content: center;
 }
 
-
-.rotas{
-    font-family:Georgia, 'Times New Roman', Times, serif;
-    text-decoration: beige;
-    transition: color 0.3s ease-in-out;
-}
-.rotas:hover{
-    color: #22c55e;
-}
-
 /* Estilos do menu de navegação */
 .nav-links {
     display: flex;
@@ -76,6 +66,12 @@ header{
     color: white;
     text-decoration: none;
     transition: color 0.3s;
+}
+
+/* Estilo do link ativo */
+.nav-links li a.ativo{
+    color: darkred; /* ou qualquer cor que queira */
+    font-weight: bold;
 }
 
 /*--------------- MOBILE SEARCH ------------------*/

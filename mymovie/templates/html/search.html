@@ -3,14 +3,16 @@
 {% block content %}
 
 <main class="relative flex w-full justify-center">
-    <div class="absolute flex top-16 overflow-x-auto">
+    <div class="container-movies flex mt-5 overflow-x-auto">
         <ul class="flex w-full justify-center flex-wrap gap-10">
         {% for searchs in search %}
-            <li class="flex-shrink-0 w-40 h-auto rounded-md flex flex-col items-center relative">
+            <li class="discovers flex-shrink-0 w-40 h-auto flex flex-col items-center relative">
+
                 {% if searchs.media_type == 'movie' %}
                 <a href="{% url 'filme' searchs.id %}" aria-label="{{ searchs.name }}">
-                    <img src="{{ searchs.poster }}" alt="Poster de {{ searchs.name }}" class="rounded-md w-full h-60 object-cover">
+                    <img src="{{ searchs.poster }}" alt="Poster de {{ searchs.name }}" class=" w-full h-60 object-cover">
                 </a>
+                
                 <a href="{% url 'filme' searchs.id %}" class="mt-2 text-center">
                     <p class="text-white text-sm font-bold text-ellipsis overflow-hidden w-full ">{{ searchs.name }}</p>
                 </a>
@@ -18,8 +20,9 @@
 
                 {% if searchs.media_type == 'tv' %}
                 <a href="{% url 'serie' searchs.id %}" aria-label="{{ searchs.name }}">
-                    <img src="{{ searchs.poster }}" alt="Poster de {{ searchs.name }}" class="rounded-md w-full h-60 object-cover">
+                    <img src="{{ searchs.poster }}" alt="Poster de {{ searchs.name }}" class=" w-full h-60 object-cover">
                 </a>
+
                 <a href="{% url 'serie' searchs.id %}" class="mt-2 text-center">
                     <p class="text-white font-bold text-sm text-ellipsis overflow-hidden ">{{ searchs.name }}</p>
                 </a>

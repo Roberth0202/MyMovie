@@ -1,8 +1,10 @@
 from django.urls import path
 from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+from django.shortcuts import redirect
 from . import views
 
 urlpatterns = [
+    path('', lambda request: redirect('home', permanent=False)),
     path('home/', views.home, name="home"),
     path('login/', views.login, name="login"),
     path('logout/', views.logout_view, name="logout"),
