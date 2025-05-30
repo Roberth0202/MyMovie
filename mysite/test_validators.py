@@ -39,5 +39,5 @@ class TestSymbolValidator(unittest.TestCase):
         except ValidationError:
             self.fail("validate() raised ValidationError unexpectedly!")
 
-if __name__ == '__main__':
-    unittest.main()
+
+    

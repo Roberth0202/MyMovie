@@ -9,7 +9,7 @@ header{
     position: relative;
     align-items: center;
 }
-
+/* ------------------ menu perfil ----------------- */
 #profile-button{
     cursor: pointer;
 }
@@ -141,6 +141,7 @@ header{
     position: relative;
 }
 
+/* Estilo das três barras do menu */
 .hamburger-icon span{
     display: block;
     position: absolute;
@@ -256,15 +257,16 @@ header{
         padding: 10px 0;
     }
 
+    /* Estilo do menu de navegação no mobile */
     .nav-links{
         position: fixed;
         top: 0;
-        right: -300px;
-        width: 250px;
+        right: -100%;
+        width: 70%;
         height: 100vh;
         background-color: #121212;
         flex-direction: column;
-        padding-top: 80px;
+        padding-top: 70px;
         transition: right 0.3s ease;
         z-index: 11;
     }
@@ -280,7 +282,7 @@ header{
     }
 
     .nav-links a{
-        font-size: 18px;
+        font-size: 20px;
     }
 }
 

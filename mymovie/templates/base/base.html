@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,21 +9,22 @@
     <!-- google font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Share+Tech&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0&icon_names=menu,chevron_right" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0&icon_names=menu,chevron_right" />
     <!-- Estilos internos -->
     <link href="{% static 'dist/styles.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/infromação_filme_serie.css' %}">
     <link rel="stylesheet" href="{% static 'css/discover.css' %}">
-    
+
 </head>
 
 <body class="">
     <header class="">
-        
+
         <!------------- Mobile: Área de pesquisa ------------>
         <button id="mobile-search-icon" class="mobile-search-icon" onclick="ToggleSearch(event)">
             <img src="{% static 'img/search.svg' %}" class="" alt="">
@@ -35,12 +37,12 @@
         </div>
 
         <nav class="navbar" role="navigation" aria-label="Main Navigation">
-            
+
             <!-- Título à esquerda -->
             <div class="logo text-white text-4xl">
                 <a href="{% url 'home' %}">MyMovie</a>
             </div>
-            
+
             <!-------------------- Menu hamburguer para mobile ------------------->
             <div class="hamburger-menu">
                 <div class="hamburger-icon" onclick=" toggleMenu()">
@@ -55,97 +57,110 @@
 
                 <ul class="nav-links flex gap-6">
                     <li class="flex justify-center items-center w-20 h-10 rounded-lg text-lg">
-                        <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}ativo{% endif %}">Inicio</a>
+                        <a href="{% url 'home' %}"
+                            class="{% if request.resolver_match.url_name == 'home' %}ativo{% endif %}">Inicio</a>
                     </li>
                     <li class="flex justify-center items-center w-20 h-10 rounded-lg text-lg">
-                        <a href="{% url 'lista' %}" class="{% if request.resolver_match.url_name == 'lista' %}ativo{% endif %}">Lista</a>
+                        <a href="{% url 'lista' %}"
+                            class="{% if request.resolver_match.url_name == 'lista' %}ativo{% endif %}">Lista</a>
                     </li>
                     <li class="flex justify-center items-center w-20 h-10 rounded-lg text-lg">
-                        <a href="{% url 'filmes' %}" class="{% if request.resolver_match.url_name == 'filmes' %}ativo{% endif %}">Filmes</a>
+                        <a href="{% url 'filmes' %}"
+                            class="{% if request.resolver_match.url_name == 'filmes' %}ativo{% endif %}">Filmes</a>
                     </li>
                     <li class="flex justify-center items-center  w-20 h-10 rounded-lg text-lg">
-                        <a href="{% url 'series' %}" class="{% if request.resolver_match.url_name == 'series' %}ativo{% endif %}">Séries</a>
+                        <a href="{% url 'series' %}"
+                            class="{% if request.resolver_match.url_name == 'series' %}ativo{% endif %}">Séries</a>
                     </li>
 
-            <!------------------ MOBILE: USER NO MENU --------------->
+                    <!------------------ MOBILE: USER NO MENU --------------->
                     <li class="mobile-user">
-                        
-                        {% if user.is_authenticated %}
-                            <div class="mobile-user-info">
 
-                                <ul class="mobile-user-menu">
-                                    <li><a href="#" class="block py-2 text-white hover:text-gray-300">Configuração</a></li>
-                                    <li>
-                                        <form action="{% url 'logout' %}" method="POST" class="block py-2 text-white hover:text-gray-300">
+                        {% if user.is_authenticated %}
+                        <div class="mobile-user-info">
+
+                            <ul class="mobile-user-menu">
+                                <li><a href="#" class="block py-2 text-white hover:text-gray-300">Configuração</a></li>
+                                <li>
+                                    <form action="{% url 'logout' %}" method="POST"
+                                        class="block py-2 text-white hover:text-gray-300">
                                         {% csrf_token %}
                                         <button type="submit" class="w-full text-left text-white">Sair</button>
-                                        </form>
-                                    </li>
-                                </ul>
-                            </div>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
                         {% else %}
-                            <div class="mobile-login">
-                                <a href="{% url 'login' %}" class="log font-bold text-lg text-white">Login</a>
-                            </div>
+                        <div class="mobile-login">
+                            <a href="{% url 'login' %}" class="log font-bold text-lg text-white">Login</a>
+                        </div>
                         {% endif %}
                     </li>
-                    </ul>
+                </ul>
             </div>
 
             <!-- Pesquisa e login à direita -->
             <div class="flex items-center gap-6">
                 <form action="{% url 'pesquisa'%}" method="GET" class="search-box flex">
-                    <input class=" font-bold text-md text-white outline-none focus:border-b-2 focus:border-white " type="search" name="q" autocomplete="off" placeholder="Pesquisar">
+                    <input class=" font-bold text-md text-white outline-none focus:border-b-2 focus:border-white "
+                        type="search" name="q" autocomplete="off" placeholder="Pesquisar">
                 </form>
 
                 {% if user.is_authenticated %}
                 <!---------------------- Menu perfil ------------------->
-                    <div class="account-user relative">
+                <div class="account-user relative">
 
-                        <!-- Botão de perfil -->
-                        <button id="profile-button" class="profile-button flex items-center focus:outline-none border-solid" onclick="clickmenu()">
-                            <img src="{% static 'img/usuario1.png' %}" alt="Profile" class="w-10 h-10 rounded-full">
-                        </button>
-                        
-                        <div id="menu" class=" absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-10">
-                            <ul>
-                                <li><a href="#" class="block cursor-pointer px-4 py-2 text-gray-800 hover:bg-gray-200">Configuração</a></li>
-                                <li><form action="{% url 'logout' %}" method="POST" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">
-                                {% csrf_token %}
+                    <!-- Botão de perfil -->
+                    <button id="profile-button" class="profile-button flex items-center focus:outline-none border-solid"
+                        onclick="clickmenu()">
+                        <img src="{% static 'img/usuario1.png' %}" alt="Profile" class="w-10 h-10 rounded-full">
+                    </button>
+
+                    <div id="menu" class=" absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-10">
+                        <ul>
+                            <li><a href="#"
+                                    class="block cursor-pointer px-4 py-2 text-gray-800 hover:bg-gray-200">Configuração</a>
+                            </li>
+                            <li>
+                                <form action="{% url 'logout' %}" method="POST"
+                                    class="block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                                    {% csrf_token %}
                                     <button type="submit" class="w-full cursor-pointer p-3 text-left">Sair</button>
-                                </form></li>
-                            </ul>
-                        </div>
+                                </form>
+                            </li>
+                        </ul>
                     </div>
+                </div>
                 {% else %}
-                    <a href="{% url 'login' %}" class="log-user font-bold text-lg text-white">Login</a>
+                <a href="{% url 'login' %}" class="log-user font-bold text-lg text-white">Login</a>
                 {% endif %}
-            </div>  
+            </div>
         </nav>
     </header>
 
-{% block content %}
-{% endblock %}
+    {% block content %}
+    {% endblock %}
 
-<footer class="relative bg-gray-900 text-white py-6 mt-10 border-t border-gray-800">
-    <div class="container mx-auto flex flex-col md:flex-row justify-between items-center px-4">
+    <footer class="relative bg-gray-900 text-white py-6 mt-10 border-t border-gray-800">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center px-4">
 
-        <div class="text-sm  text-gray-400 mb-2 md:mb-0">
-            &copy; {% now 'Y' %} MyMovie. Todos os direitos reservados.<br>
-            <p>Dados fornecidos por <a href="https://developer.themoviedb.org/docs/getting-started" target="_blank" class="underline hover:text-gray-200">TMDB</a>.</p>
+            <div class="text-sm  text-gray-400 mb-2 md:mb-0">
+                &copy; {% now 'Y' %} MyMovie. Todos os direitos reservados.<br>
+                <p>Dados fornecidos por <a href="https://developer.themoviedb.org/docs/getting-started" target="_blank"
+                        class="underline hover:text-gray-200">TMDB</a>.</p>
+            </div>
+            <div class="flex gap-4">
+                <a href="https://github.com/Roberth0202" target="_blank"
+                    class="hover:text-gray-200 transition">GitHub</a>
+                <a href="mailto:roberthcontato09@gmail.com" class="hover:text-gray-200 transition">Contato</a>
+            </div>
         </div>
-        <div class="flex gap-4">
-            <a href="https://github.com/Roberth0202" target="_blank" class="hover:text-gray-200 transition">GitHub</a>
-            <a href="mailto:roberthcontato09@gmail.com" class="hover:text-gray-200 transition">Contato</a>
-        </div>
-    </div>
-</footer>
+    </footer>
 
-<!--js do tailwind-->
-<script src="{% static 'js/script.js' %}"></script>
-<!-- Toastr JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <!--js do tailwind-->
+    <script src="{% static 'js/script.js' %}"></script>
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </body>
+
 </html>
-
-
